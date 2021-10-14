@@ -38,6 +38,7 @@
           "tsx"
         ]
       }
-    ]
+    ],
+    "prettier/prettier": "off"
   }
 }
