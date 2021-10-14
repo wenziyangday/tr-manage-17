@@ -21,6 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "prepare": "npx husky install && npx husky add .husky/pre-commit \"yarn lint-staged\" && npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'",
     "eslint": "eslint --ext .tsx,.ts --fix src/",
     "prettier": "npx prettier --write src/"
   },
@@ -53,6 +54,20 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.2.3",
     "prettier": "^2.4.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "yarn eslint",
+      "yarn prettier"
+    ],
+    "*.css": [
+      "yarn prettier"
+    ]
+  },
+  "husky": {
+    "hooks": {}
   }
 }
