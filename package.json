@@ -4,6 +4,7 @@
   "description": "用于tr-manage升级使用",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.3.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -11,6 +12,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "antd": "^4.16.13",
+    "craco-less": "^1.20.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -18,11 +21,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "prepare": "npx husky install",
-    "init-git-hooks": "npx husky add .husky/pre-commit \"yarn lint-staged\" && npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "init-git-hooks": "npx husky install && npx husky add .husky/pre-commit \"yarn lint-staged\" && npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'",
     "eslint": "eslint --ext .tsx,.ts --fix src/",
     "prettier": "npx prettier --write src/"
   },

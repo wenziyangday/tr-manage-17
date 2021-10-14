@@ -14,6 +14,9 @@
 # production
 /build
 
+# iconfont
+/src/style/font
+
 # misc
 .DS_Store
 .env.local

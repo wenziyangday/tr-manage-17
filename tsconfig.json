@@ -23,5 +23,6 @@
   "include": [
     "src",
     "global.d.ts"
-  ]
+  ],
+  "extends": "./alias.json"
 }

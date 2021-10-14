@@ -30,6 +30,7 @@
     "no-use-before-define": "off",
     "import/extensions": "off",
     "import/no-unresolved": "off",
+    "@typescript-eslint/no-var-requires": "off",
     "react/jsx-filename-extension": [
       "error",
       {

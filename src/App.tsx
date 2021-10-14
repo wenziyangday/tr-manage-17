@@ -1,8 +1,14 @@
 import React, { FC } from "react";
-import "./App.css";
+import "@/App.less";
+import Fun from "@components/Fun";
 
 const App: FC = () => {
-  return <>kkkkl</>;
+  return (
+    <>
+      <Fun />
+      kkkkl
+    </>
+  );
 };
 
 export default App;
