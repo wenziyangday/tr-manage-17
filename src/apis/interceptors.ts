@@ -1,8 +1,7 @@
+import { REACT_APP_API, TOKEN, WHITELIST } from "@common/constant";
 import DataStorageUtil from "@utils/storage";
 import { message } from "antd";
 import axios, { Axios, AxiosResponse } from "axios";
-
-import { REACT_APP_API, TOKEN, WHITELIST } from "@/common/constant";
 
 interface InterceptorVO {
   instance: undefined | Axios;
@@ -11,13 +10,11 @@ interface InterceptorVO {
 
   initInterceptor(): void;
 }
-
 interface BaseResultResponse<T = unknown> {
   code: number;
   message: string;
   data: T;
 }
-
 interface ResultResponse<T = unknown> extends AxiosResponse {
   data: BaseResultResponse<T>;
 }

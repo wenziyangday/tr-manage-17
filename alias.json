@@ -7,9 +7,8 @@
       "@pages/*": ["src/pages/*"],
       "@routes/*": ["src/routes/*"],
       "@components/*": ["src/components/*"],
-      "@constant/*": ["src/constant/*"],
       "@utils/*": ["src/utils/*"],
-      "@models/*": ["src/models/*"],
+      "@common/*": ["src/common/*"],
       "@labs/*": ["src/labs/*"]
     }
   }
