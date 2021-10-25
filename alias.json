@@ -4,9 +4,10 @@
     "paths": {
       "@/*": ["src/*"],
       "@api/*": ["src/api/*"],
+      "@pages/*": ["src/pages/*"],
+      "@routes/*": ["src/routes/*"],
       "@components/*": ["src/components/*"],
       "@constant/*": ["src/constant/*"],
-      "@views/*": ["src/views/*"],
       "@utils/*": ["src/utils/*"],
       "@models/*": ["src/models/*"],
       "@labs/*": ["src/labs/*"]
