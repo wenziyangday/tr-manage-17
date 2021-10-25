@@ -7,7 +7,7 @@ type RouteItemVO = {
   showInNav: boolean; // 导航是否显示
   parent: string; // 父级标题
   redirect: string; // 要跳转的
-  routes: RouteItemVO[]; // 下级路由
+  routes: RouteVO[]; // 下级路由
 };
 
 type RouteVO = Partial<RouteItemVO>;

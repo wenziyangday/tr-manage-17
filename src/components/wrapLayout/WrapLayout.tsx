@@ -1,17 +1,23 @@
-import About from "@pages/About";
-import Home from "@pages/Home";
+import "@components/wrapLayout/style/wrap-layout.less";
+
+import RenderSuspense from "@components/renderSuspense/RenderSuspense";
+import RenderFooter from "@components/wrapLayout/components/RenderFooter";
+import { Layout } from "antd";
 import React, { FC } from "react";
-import { Route, Switch } from "react-router-dom";
+
+const { Header, Content, Footer } = Layout;
 
 const WrapLayout: FC = () => {
   return (
-    <>
-      <h4>包裹容器</h4>
-      <Switch>
-        <Route path="/" key="home" component={Home} exact />
-        <Route path="/about" key="about" component={About} exact />
-      </Switch>
-    </>
+    <Layout className="wrap-layout">
+      <Header />
+      <Content>
+        <RenderSuspense />
+      </Content>
+      <Footer>
+        <RenderFooter />
+      </Footer>
+    </Layout>
   );
 };
 export default WrapLayout;
