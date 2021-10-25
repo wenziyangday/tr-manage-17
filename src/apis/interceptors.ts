@@ -1,6 +1,7 @@
-import axios, { Axios, AxiosResponse } from "axios";
-import { message } from "antd";
 import DataStorageUtil from "@utils/storage";
+import { message } from "antd";
+import axios, { Axios, AxiosResponse } from "axios";
+
 import { REACT_APP_API, TOKEN, WHITELIST } from "@/common/constant";
 
 interface InterceptorVO {

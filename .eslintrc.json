@@ -24,6 +24,7 @@
   "plugins": [
     "react",
     "@typescript-eslint",
+    "simple-import-sort",
     "react-hooks"
   ],
   "rules": {
@@ -46,6 +47,10 @@
         ]
       }
     ],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "sort-imports": "off",
+    "import/order": "off",
     "prettier/prettier": "off"
   }
 }

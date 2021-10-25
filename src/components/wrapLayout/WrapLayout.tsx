@@ -1,7 +1,7 @@
+import About from "@pages/About";
+import Home from "@pages/Home";
 import React, { FC } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "@pages/Home";
-import About from "@pages/About";
 
 const WrapLayout: FC = () => {
   return (

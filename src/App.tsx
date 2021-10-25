@@ -1,11 +1,12 @@
-import React, { FC } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "@/App.less";
+
+import Fun from "@components/Fun";
+import WrapLayout from "@components/wrapLayout/WrapLayout";
+import Login from "@pages/login/Login";
 import { ConfigProvider } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
-import WrapLayout from "@components/wrapLayout/WrapLayout";
-import Fun from "@components/Fun";
-import Login from "@/pages/login/Login";
-import "@/App.less";
+import React, { FC } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const App: FC = () => {
   return (
