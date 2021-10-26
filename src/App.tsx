@@ -1,18 +1,17 @@
 import "@/App.less";
 
+import RenderSuspense from "@components/renderSuspense/RenderSuspense";
 import { ConfigProvider } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
 import React, { FC } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-
-import RenderSuspense from "./components/renderSuspense/RenderSuspense";
 
 const App: FC = () => {
   return (
     <ConfigProvider locale={zhCN}>
       <div className="app">
         <Router>
-          <RenderSuspense isHaveLogin />
+          <RenderSuspense isOutsideAdmin />
         </Router>
       </div>
     </ConfigProvider>

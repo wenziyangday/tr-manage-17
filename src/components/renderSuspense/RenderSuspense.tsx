@@ -5,15 +5,15 @@ import React, { FC, Suspense } from "react";
 import { Switch } from "react-router-dom";
 
 type IRenderSuspenseVO = Partial<{
-  isHaveLogin: boolean;
+  isOutsideAdmin: boolean;
 }>;
 
 const RenderSuspense: FC<IRenderSuspenseVO> = (props) => {
-  const { isHaveLogin } = props;
+  const { isOutsideAdmin } = props;
 
   const RenderRoutes = (() => {
     let [, { routes }] = flatRoutes;
-    if (isHaveLogin) routes = flatRoutes;
+    if (isOutsideAdmin) routes = flatRoutes;
     return routes?.map((route) => RouteWithSub(route));
   })();
 
@@ -24,4 +24,4 @@ const RenderSuspense: FC<IRenderSuspenseVO> = (props) => {
   );
 };
 
-export default RenderSuspense;
+export default React.memo(RenderSuspense);

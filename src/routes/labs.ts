@@ -3,10 +3,19 @@ import React from "react";
 export default [
   {
     path: "/labs",
-    title: "实验室",
+    title: "React.memo",
     uniqueKey: "Labs",
-    component: React.lazy(() => import("@pages/Home")),
+    component: React.lazy(() => import("@labs/memo/Memo")),
     exact: true,
-    routes: [],
+    routes: [
+      {
+        path: "/Memo",
+        title: "React.memo",
+        uniqueKey: "Labs",
+        component: React.lazy(() => import("@labs/memo/Memo")),
+        exact: true,
+        routes: [],
+      },
+    ],
   },
 ];
