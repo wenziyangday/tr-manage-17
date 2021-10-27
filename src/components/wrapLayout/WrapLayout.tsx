@@ -1,7 +1,7 @@
 import "@components/wrapLayout/style/wrap-layout.less";
 
 import RenderSuspense from "@components/renderSuspense/RenderSuspense";
-import RenderBreadCrumbs from "@components/wrapLayout/components/RenderBreadCrumbs";
+import RenderBreadcrumbs from "@components/wrapLayout/components/RenderBreadcrumbs";
 import RenderFooter from "@components/wrapLayout/components/RenderFooter";
 import RenderLogo from "@components/wrapLayout/components/RenderLogo";
 import RenderMenu from "@components/wrapLayout/components/RenderMenu";
@@ -26,8 +26,10 @@ const WrapLayout: FC = () => {
         </div>
       </Header>
       <Content className="wl-content max-width">
-        <RenderBreadCrumbs />
-        <RenderSuspense />
+        <RenderBreadcrumbs />
+        <div className="wl-c-wrap">
+          <RenderSuspense />
+        </div>
       </Content>
       <Footer>
         <RenderFooter />
