@@ -1,47 +1,32 @@
 import "@components/wrapLayout/style/wrap-layout.less";
 
 import RenderSuspense from "@components/renderSuspense/RenderSuspense";
+import RenderBreadCrumbs from "@components/wrapLayout/components/RenderBreadCrumbs";
 import RenderFooter from "@components/wrapLayout/components/RenderFooter";
-import { Button, Layout } from "antd";
+import RenderLogo from "@components/wrapLayout/components/RenderLogo";
+import RenderMenu from "@components/wrapLayout/components/RenderMenu";
+import RenderTool from "@components/wrapLayout/components/RenderTool";
+import { Layout } from "antd";
 import React, { FC } from "react";
-import { useHistory } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
 const WrapLayout: FC = () => {
-  const history = useHistory();
   return (
     <Layout className="wrap-layout">
-      <Button
-        onClick={() => {
-          history.push("/login");
-        }}
-      >
-        登录
-      </Button>
-      <Button
-        onClick={() => {
-          history.push("/");
-        }}
-      >
-        首页
-      </Button>
-      <Button
-        onClick={() => {
-          history.push("/about");
-        }}
-      >
-        关于我们
-      </Button>
-      <Button
-        onClick={() => {
-          history.push("/labs");
-        }}
-      >
-        实验室
-      </Button>
-      <Header />
-      <Content>
+      <Header className="wl-header">
+        <div className="wl-hb-logo">
+          <RenderLogo />
+        </div>
+        <div className="wl-hb-menu">
+          <RenderMenu />
+        </div>
+        <div className="wl-hb-tool">
+          <RenderTool />
+        </div>
+      </Header>
+      <Content className="wl-content max-width">
+        <RenderBreadCrumbs />
         <RenderSuspense />
       </Content>
       <Footer>

@@ -1,3 +1,31 @@
 .wrap-layout {
   min-height: 100vh;
+
+  .wl- {
+    &header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &hb- {
+      &logo {
+
+      }
+
+      &menu {
+        flex: 1;
+        height: 64px;
+
+        > .ant-menu {
+          height: 64px !important;
+        }
+      }
+    }
+
+    &content {
+
+    }
+  }
+
 }

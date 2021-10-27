@@ -1,0 +1,37 @@
+@import "src/style/variables";
+
+.render- {
+  &tool {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    margin-left: @basic-gutter;
+
+    .rt- {
+      &item {
+        display: inline-flex;
+        cursor: pointer;
+
+        &:first-child {
+          margin-right: @basic-gutter;
+        }
+      }
+
+      &i- {
+        &badge {
+          font-size: 12px;
+        }
+
+        &mail {
+          font-size: 30px;
+          color: @color-white;
+        }
+
+        &user {
+          font-size: 30px;
+          color: @color-white;
+        }
+      }
+    }
+  }
+}
