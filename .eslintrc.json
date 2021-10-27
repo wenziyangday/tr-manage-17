@@ -61,6 +61,7 @@
         "treatUndefinedAsUnspecified": true
       }
     ],
+    "no-nested-ternary": "error",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "sort-imports": "off",
