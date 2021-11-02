@@ -11,6 +11,14 @@ const pages: RouteVO[] = [
     routes: [],
   },
   {
+    path: "/text-column",
+    title: "文本栏目",
+    uniqueKey: "TextColumn",
+    component: React.lazy(() => import("@pages/textColumn/TextColumn")),
+    exact: true,
+    routes: [],
+  },
+  {
     path: "/about",
     title: "关于我们",
     uniqueKey: "About",

@@ -10,24 +10,21 @@ import { useHistory } from "react-router-dom";
 const RenderMenu: FC = () => {
   const history = useHistory();
 
-  // menu 多级路由处理 TODO 无限级
-  const renderRootRoutes = useCallback(() => {
-    const [, admin] = wrapRoutes;
-    const { routes: arr = [] } = admin;
-    const domArr: any[] = [];
+  // menu 多级路由处理
+  const dom = (arr: any[], domArr: any[]) => {
     for (let i = 0; i < arr.length; i += 1) {
       const domArrKey: RouteVO = arr[i];
       const { routes = [], title, path, showInNav } = domArrKey;
-      const mapRoutes = routes
-        .filter((x: RouteVO) => x.path !== "*" && x.showInNav !== false)
-        .map((x: RouteVO) => (
-          <Menu.Item key={`${path}${x.path}`} className="item">
-            {x.title}
-          </Menu.Item>
-        ));
 
       if (path !== "*" && showInNav !== false) {
-        if (routes && routes.length && mapRoutes.length) {
+        if (routes && routes.length > 0) {
+          const mapRoutes = routes
+            .filter((x: RouteVO) => x.path !== "*" && x.showInNav !== false)
+            .map((x: RouteVO) => (
+              <Menu.Item key={`${path}${x.path}`} className="item">
+                {x.title}
+              </Menu.Item>
+            ));
           domArr.push(
             <Menu.SubMenu key={path} title={title}>
               {mapRoutes}
@@ -42,7 +39,13 @@ const RenderMenu: FC = () => {
         }
       }
     }
+  };
 
+  const renderRootRoutes = useCallback(() => {
+    const [, admin] = wrapRoutes;
+    const { routes: arr = [] } = admin;
+    const domArr: any[] = [];
+    dom(arr, domArr);
     return domArr ?? <div />;
   }, [])();
 
@@ -58,7 +61,7 @@ const RenderMenu: FC = () => {
     const arr = splitArr.splice(1).map((x: string | null) => `/${x}`);
     let back = "";
     const backArr: string[] = [];
-    arr.forEach((x: string | null) => {
+    arr.forEach((x: string) => {
       back += x;
       backArr.push(back);
     });
@@ -75,6 +78,24 @@ const RenderMenu: FC = () => {
       selectedKeys={activeMenu}
     >
       {renderRootRoutes}
+      <Menu.SubMenu key={1} title={1}>
+        <Menu.Item key="1-1">1-1</Menu.Item>
+        <Menu.Item key="1-2">1-2</Menu.Item>
+        <Menu.Item key="1-3">1-3</Menu.Item>
+        <Menu.SubMenu key="1-4" title="1-4">
+          <Menu.Item key="1-4-1">1-4-1</Menu.Item>
+          <Menu.Item key="1-4-2">1-4-2</Menu.Item>
+          <Menu.Item key="1-4-3">1-4-3</Menu.Item>
+          <Menu.SubMenu key="1-4-4" title="1-4-4">
+            <Menu.Item key="1-4-4-1">1-4-4-1</Menu.Item>
+            <Menu.Item key="1-4-4-2">1-4-4-2</Menu.Item>
+            <Menu.Item key="1-4-4-3">1-4-4-3</Menu.Item>
+            <Menu.Item key="1-4-4-4">1-4-4-4</Menu.Item>
+          </Menu.SubMenu>
+          <Menu.Item key="1-4-5">1-4-5</Menu.Item>
+        </Menu.SubMenu>
+        <Menu.Item key="1-5">1-5</Menu.Item>
+      </Menu.SubMenu>
     </Menu>
   );
 };
