@@ -11,15 +11,23 @@
 
   .rcp- {
     &content {
+      display: flex;
       margin-bottom: 6px;
     }
 
     &c- {
       &label {
-        display: inline-block;
+        display: block;
         width: 68px;
+        flex: 0 0 68px;
         text-align: right;
         font-size: 12px;
+      }
+
+      &value {
+        flex: 1;
+        color: @word-color;
+        text-align: justify;
       }
     }
   }

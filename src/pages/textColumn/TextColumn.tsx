@@ -46,6 +46,7 @@ const TextColumn: FC = () => {
               enName={item.enName}
               sortNum={item.sortNum}
               state={item.state}
+              shortDesc={item.shortDesc}
               createTime={formatTime(item.createTime)}
               modifiedTime={formatTime(item.modifiedTime)}
             />
