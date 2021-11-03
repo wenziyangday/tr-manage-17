@@ -1,5 +1,14 @@
 import { ParseObjVO, ParseStringVO } from "@utils/types/utils";
 import { message } from "antd";
+import dayjs from "dayjs";
+
+/**
+ * @param time string 或者 number 字符串
+ * @return 返回一个参数对象
+ * */
+export const formatTime = (time: string | number) => {
+  return dayjs(time).format("YYYY-MM-DD HH:mm:ss");
+};
 
 /**
  * @param uri string url 字符串

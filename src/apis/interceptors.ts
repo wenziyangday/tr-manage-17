@@ -55,7 +55,7 @@ export default class Interceptor implements InterceptorVO {
           // token 失效 也要跳走
           headers.authorization =
             token ||
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjEyZGVjNjllNTA4NmM5NjYxN2M1ZGQxIiwiaWF0IjoxNjM0ODA1OTY1LCJleHAiOjE2MzU0MTA3NjV9.PUKgkDgzevj5wntSijKsB-VB13R_O30K5oUBK3G8rXc";
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjEyZGVjNjllNTA4NmM5NjYxN2M1ZGQxIiwiaWF0IjoxNjM1ODYwMDE1LCJleHAiOjE2MzY0NjQ4MTV9.KnE6_1f_CSrX7_UGYC7u8RiedmU-jDXhV9SAA1Oo8hw";
         } else {
           // goLogin();
         }

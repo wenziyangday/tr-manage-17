@@ -1,0 +1,38 @@
+.state-format {
+  display: inline-flex;
+  align-items: center;
+  color: #0bf10b;
+
+  i {
+    display: inline-block;
+    margin-right: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #0bf10b;
+  }
+
+  &.green {
+    color: #a932f5;
+
+    i {
+      background: #a932f5;
+    }
+  }
+
+  &.red {
+    color: red;
+
+    i {
+      background: red;
+    }
+  }
+
+  &.deleted {
+    color: gray;
+
+    i {
+      background: gray;
+    }
+  }
+}

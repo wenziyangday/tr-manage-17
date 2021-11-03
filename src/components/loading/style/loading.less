@@ -1,16 +1,16 @@
 @import "src/style/variables";
 
 .loading {
-  display: flex;
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 9999;
+  display: flex;
+  width: 100vw;
   align-items: center;
   justify-content: center;
-  width: 100vw;
   min-height: 100vh;
   background: transparent;
-  z-index: 9999;
 
   .inner-loading {
     margin-bottom: 100px;

@@ -8,6 +8,9 @@ type IRenderSuspenseVO = Partial<{
   isOutsideAdmin: boolean;
 }>;
 
+/**
+ * @description 路由懒加载的suspense
+ * */
 const RenderSuspense: FC<IRenderSuspenseVO> = (props) => {
   const { isOutsideAdmin } = props;
 

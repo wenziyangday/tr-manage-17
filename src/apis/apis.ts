@@ -13,12 +13,18 @@ class Apis implements ApisVO {
     }
   }
 
+  /** 用户信息 */
   getUserInfo = (params?: any) => {
     return this.http?.getD("/user/info", params);
   };
 
   postLogin = (params?: any) => {
     return this.http?.postD("/user/login", params);
+  };
+
+  /** 栏目信息 */
+  getTextCol = (params?: any) => {
+    return this.http?.getD("/column/query", params);
   };
 }
 

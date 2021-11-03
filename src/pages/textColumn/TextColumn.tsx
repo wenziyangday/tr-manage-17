@@ -1,11 +1,25 @@
 import "@pages/textColumn/style/text-column.less";
 
+import apis from "@apis/apis";
+import CURD from "@components/curd/CURD";
 import IconFont from "@components/iconFont/IconFont";
+import RenderCollapsePanel from "@pages/textColumn/components/RenderCollapsePanel";
+import {
+  ITextColumnState,
+  RenderItem,
+  TCItemVO,
+} from "@pages/textColumn/types/textColumn";
+import { formatTime } from "@utils/utils";
+import { useRequest, useSetState } from "ahooks";
 import { Button, Card, Collapse, List } from "antd";
-import React, { FC } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 
-type RenderItem = (item: any, index: number) => React.ReactNode;
+/**
+ * @description 文本栏目
+ * */
 const TextColumn: FC = () => {
+  const [state, setTCState] = useSetState<Partial<ITextColumnState>>({});
+  const { tcList = [] } = state;
   // 新增栏目
   const AddMain: FC = React.memo(() => {
     return (
@@ -17,27 +31,52 @@ const TextColumn: FC = () => {
   });
 
   // list render
-  const renderItem: RenderItem = (item: any) => {
+  const renderItem: RenderItem = (item: TCItemVO) => {
     return (
       <List.Item className="tc-l-item">
         <Collapse className="tc-l-i-item">
           <Collapse.Panel
-            key={item}
-            header={<span className="tc-l-i-header">{item}</span>}
+            className="tc-l-i-panel"
+            key={item._id}
+            header={<span className="tc-l-i-header">{item.columnName}</span>}
+            extra={<CURD showAdd={false} />}
           >
-            <div>jdk</div>
+            <RenderCollapsePanel
+              columnName={item.columnName}
+              enName={item.enName}
+              sortNum={item.sortNum}
+              state={item.state}
+              createTime={formatTime(item.createTime)}
+              modifiedTime={formatTime(item.modifiedTime)}
+            />
           </Collapse.Panel>
         </Collapse>
       </List.Item>
     );
   };
 
+  const { loading, run: textColRequest } = useRequest(apis.getTextCol, {
+    manual: true,
+  });
+
+  const handleTextColRequest = useCallback(async () => {
+    const { data: _tcList } = await textColRequest();
+    setTCState({
+      tcList: _tcList || [],
+    });
+  }, []);
+
+  useEffect(() => {
+    handleTextColRequest().then();
+  }, []);
+
   return (
     <Card title="文本栏目" className="text-column">
       <AddMain />
       <List
+        loading={loading}
         className="tc-list"
-        dataSource={[1, 2, 3, 4]}
+        dataSource={tcList}
         renderItem={renderItem}
       />
     </Card>

@@ -61,7 +61,10 @@
         "treatUndefinedAsUnspecified": true
       }
     ],
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
     "no-nested-ternary": "error",
+    "no-underscore-dangle": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "sort-imports": "off",

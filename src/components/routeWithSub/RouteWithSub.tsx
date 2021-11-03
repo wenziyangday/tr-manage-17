@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 type RouteWithSubVO = (route: RouteVO) => JSX.Element;
 
 /**
- * @description
+ * @description 下级路由渲染
  * */
 const RouteWithSub: RouteWithSubVO = (route: RouteVO) => {
   const { path, uniqueKey, exact, routes } = route;

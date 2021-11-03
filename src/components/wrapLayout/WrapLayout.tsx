@@ -11,6 +11,9 @@ import React, { FC } from "react";
 
 const { Header, Content, Footer } = Layout;
 
+/**
+ * @description 面板容器
+ * */
 const WrapLayout: FC = () => {
   return (
     <Layout className="wrap-layout">

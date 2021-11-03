@@ -2,6 +2,9 @@ import "@components/loading/style/loading.less";
 
 import React, { FC } from "react";
 
+/**
+ * @description 加载中
+ * */
 const Loading: FC = () => {
   return (
     <div className="loading">

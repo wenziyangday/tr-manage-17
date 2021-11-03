@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 /**
- * 图标组件
+ * @description 图标组件
  * */
 type IconFontVO = {
   iconClass: string;
@@ -9,7 +9,7 @@ type IconFontVO = {
 };
 
 const IconFont: FC<Partial<IconFontVO>> = (props) => {
-  const { iconClass, styleClass } = props;
+  const { iconClass, styleClass = "" } = props;
 
   return <span className={`iconfont ${iconClass} ${styleClass}`} />;
 };
