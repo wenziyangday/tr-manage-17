@@ -1,5 +1,6 @@
 import "@components/curd/style/curd.less";
 
+import { OptsVO } from "@common/commonVO";
 import IconFont from "@components/iconFont/IconFont";
 import { Menu, Tooltip } from "antd";
 import React, { FC, useCallback } from "react";
@@ -7,7 +8,7 @@ import React, { FC, useCallback } from "react";
 type OptItemVO = {
   text: string;
   icon: string;
-  key: "add" | "edit" | "restart" | "disable" | "delete";
+  key: OptsVO;
 };
 
 type ICurdVO = {
@@ -18,7 +19,7 @@ type ICurdVO = {
   /** 图标或者文字 */
   iconOrText: "icon" | "text";
   add: () => void;
-  edit: () => void;
+  edit: <T>(val?: T) => void;
   restart: () => void;
   disable: () => void;
   delete: () => void;

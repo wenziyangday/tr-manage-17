@@ -1,3 +1,5 @@
+import { TCItemVO } from "@pages/textColumn/types/textColumn";
+
 import Request from "@/apis/request";
 
 interface ApisVO {
@@ -18,6 +20,7 @@ class Apis implements ApisVO {
     return this.http?.getD("/user/info", params);
   };
 
+  /** 登录 */
   postLogin = (params?: any) => {
     return this.http?.postD("/user/login", params);
   };
@@ -25,6 +28,25 @@ class Apis implements ApisVO {
   /** 栏目信息 */
   getTextCol = (params?: any) => {
     return this.http?.getD("/column/query", params);
+  };
+
+  /** 栏目信息序号 */
+  getTextColSortNo = (params?: any) => {
+    return this.http?.getD("/column/sort-number", params);
+  };
+
+  /** 新增栏目信息 */
+  createTextCol = (
+    params?: Pick<TCItemVO, "sortNum" | "columnName" | "shortDesc" | "urls">
+  ) => {
+    return this.http?.postD("/column/create", params);
+  };
+
+  /** 修改栏目信息 */
+  updateTextCol = (
+    params?: Pick<TCItemVO, "sortNum" | "columnName" | "shortDesc" | "urls">
+  ) => {
+    return this.http?.postD("/column/update", params);
   };
 }
 

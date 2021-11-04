@@ -1,4 +1,4 @@
-import { CommonObjVO } from "@common/commonVO";
+import { CommonObjVO, OptsVO } from "@common/commonVO";
 import React from "react";
 
 /**
@@ -24,5 +24,14 @@ export type TCItemVO = {
  * @description TextColumn 状态管理
  * */
 export type ITextColumnState = {
+  /** 列表数据 */
   tcList: TCItemVO[];
+  /** 操作类别 */
+  optType: OptsVO;
+  /** 弹窗是否显示 */
+  modalVisible: boolean;
+  /** 当前操作的信息的id */
+  curInfoId: string;
+  /** 是否更新列表 */
+  updateList: boolean;
 };

@@ -35,3 +35,25 @@ export const ErrorNetwork: {
   ERROR503: "服务暂时不可用",
   ERROR505: "请求的 HTTP 版本不支持",
 };
+
+/**
+ * @description 项目中常见操作
+ * */
+export enum Opts {
+  add = "add",
+  edit = "edit",
+  restart = "restart",
+  disable = "disable",
+  delete = "delete",
+}
+
+/**
+ * @description 项目中常见操作的中英文对应
+ * */
+export enum OptsCN {
+  add = "新增",
+  edit = "编辑",
+  restart = "启用",
+  disable = "禁用",
+  delete = "删除",
+}
