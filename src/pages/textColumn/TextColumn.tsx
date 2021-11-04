@@ -135,7 +135,7 @@ const TextColumn: FC = () => {
   }, [modalVisible]);
 
   /** 点击弹窗确定 */
-  const modalConfirm = () => {
+  const modalConfirm = useCallback(() => {
     modalForm.validateFields().then(async (values) => {
       if (optType === Opts.add) {
         await createRequest({
@@ -155,9 +155,9 @@ const TextColumn: FC = () => {
           updateList: !updateList,
         });
         message.success(`栏目${OptsCN[optType]}成功`);
-      }, 5000);
+      }, 500);
     });
-  };
+  }, []);
 
   /** 新增信息 */
   const addModal = useCallback(async (val?: TCItemVO) => {
@@ -216,15 +216,18 @@ const TextColumn: FC = () => {
         title={`${OptsCN[optType]}文本栏目`}
         width={740}
         visible={modalVisible}
-        confirmLoading
         onCancel={modalCancel}
         onOk={modalConfirm}
       >
         <Form form={modalForm} labelCol={{ span: 4 }} wrapperCol={{ span: 18 }}>
-          <Form.Item label="序号" name="sortNum" required>
+          <Form.Item label="序号" name="sortNum" rules={[{ required: true }]}>
             <Input disabled={optType === Opts.add} />
           </Form.Item>
-          <Form.Item name="columnName" label="栏目名称" required>
+          <Form.Item
+            name="columnName"
+            label="栏目名称"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
           <Form.Item name="enName" label="英文名称">
