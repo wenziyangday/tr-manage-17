@@ -48,6 +48,21 @@ class Apis implements ApisVO {
   ) => {
     return this.http?.postD("/column/update", params);
   };
+
+  /** 禁用栏目信息 */
+  disableTextCol = (params: { id: string }) => {
+    return this.http?.postD("/column/disable", params);
+  };
+
+  /** 启用栏目信息 */
+  restartTextCol = (params: { id: string }) => {
+    return this.http?.postD("/column/restart", params);
+  };
+
+  /** 删除栏目信息 */
+  deleteTextCol = (params: { id: string }) => {
+    return this.http?.postD("/column/delete", params);
+  };
 }
 
 export default new Apis();

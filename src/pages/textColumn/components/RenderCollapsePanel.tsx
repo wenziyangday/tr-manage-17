@@ -80,4 +80,4 @@ const RenderCollapsePanel: FC<IRenderCollapsePanelVO> = (props) => {
   );
 };
 
-export default React.memo(RenderCollapsePanel);
+export default RenderCollapsePanel;

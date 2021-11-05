@@ -11,6 +11,7 @@ import {
   RenderItem,
   TCItemVO,
 } from "@pages/textColumn/types/textColumn";
+import { showConfirmModal } from "@utils/componentUtils";
 import { formatTime } from "@utils/utils";
 import { useRequest, useSetState } from "ahooks";
 import {
@@ -36,12 +37,12 @@ const TextColumn: FC = () => {
     optType = Opts.add,
     modalVisible = false,
     curInfoId,
-    updateList,
+    updateList = false,
   } = state;
   /** form */
   const [modalForm] = Form.useForm();
 
-  /** 新增栏目 */
+  /** 新增栏目组件 */
   const AddMain: FC = React.memo(() => {
     return (
       <Button
@@ -69,8 +70,20 @@ const TextColumn: FC = () => {
             extra={
               <CURD
                 showAdd={false}
+                restartOrDisable={
+                  item.state === 2 ? Opts.disable : Opts.restart
+                }
                 edit={async () => {
                   await editModal(item);
+                }}
+                disable={() => {
+                  disableConfirm(item);
+                }}
+                restart={() => {
+                  restartConfirm(item);
+                }}
+                delete={() => {
+                  deleteConfirm(item);
                 }}
               />
             }
@@ -135,28 +148,27 @@ const TextColumn: FC = () => {
   }, [modalVisible]);
 
   /** 点击弹窗确定 */
-  const modalConfirm = useCallback(() => {
-    modalForm.validateFields().then(async (values) => {
-      if (optType === Opts.add) {
-        await createRequest({
-          ...values,
-          urls: [{}],
-        });
-      } else {
-        await updateRequest({
-          ...values,
-          id: curInfoId,
-          urls: [{}],
-        });
-      }
-      setTimeout(() => {
-        setTCState({
-          modalVisible: false,
-          updateList: !updateList,
-        });
-        message.success(`栏目${OptsCN[optType]}成功`);
-      }, 500);
-    });
+  const modalConfirm = useCallback(async () => {
+    const values = await modalForm.validateFields();
+    if (optType === Opts.add) {
+      await createRequest({
+        ...values,
+        urls: [{}],
+      });
+    } else {
+      await updateRequest({
+        ...values,
+        id: curInfoId,
+        urls: [{}],
+      });
+    }
+    setTimeout(() => {
+      setTCState({
+        modalVisible: false,
+        updateList: !updateList,
+      });
+      message.success(`栏目${OptsCN[optType]}成功`);
+    }, 500);
   }, []);
 
   /** 新增信息 */
@@ -183,6 +195,39 @@ const TextColumn: FC = () => {
     modalForm.setFieldsValue(val);
   }, []);
 
+  /** 禁用信息 */
+  const disableConfirm = useCallback(
+    (val: TCItemVO) => {
+      showConfirmModal(Opts.disable, async () => {
+        await disableRequest({ id: val._id });
+        setTCState({ updateList: 0 });
+      });
+    },
+    [updateList]
+  );
+
+  /** 启用信息 */
+  const restartConfirm = useCallback(
+    (val: TCItemVO) => {
+      showConfirmModal(Opts.restart, async () => {
+        await restartRequest({ id: val._id });
+        setTCState({ updateList: 1 });
+      });
+    },
+    [updateList]
+  );
+
+  /** 删除信息 */
+  const deleteConfirm = useCallback(
+    (val: TCItemVO) => {
+      showConfirmModal(Opts.delete, async () => {
+        await deleteRequest({ id: val._id });
+        setTCState({ updateList: 2 });
+      });
+    },
+    [updateList]
+  );
+
   /** 栏目序号网络请求 */
   const { run: textColSortNoRequest } = useRequest(apis.getTextColSortNo, {
     manual: true,
@@ -195,6 +240,21 @@ const TextColumn: FC = () => {
 
   /** 修改栏目网络请求 */
   const { run: updateRequest } = useRequest(apis.updateTextCol, {
+    manual: true,
+  });
+
+  /** 禁用栏目网络请求 */
+  const { run: disableRequest } = useRequest(apis.disableTextCol, {
+    manual: true,
+  });
+
+  /** 启用栏目网络请求 */
+  const { run: restartRequest } = useRequest(apis.restartTextCol, {
+    manual: true,
+  });
+
+  /** 删除栏目网络请求 */
+  const { run: deleteRequest } = useRequest(apis.deleteTextCol, {
     manual: true,
   });
 

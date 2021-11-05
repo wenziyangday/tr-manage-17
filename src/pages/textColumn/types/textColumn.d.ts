@@ -33,5 +33,5 @@ export type ITextColumnState = {
   /** 当前操作的信息的id */
   curInfoId: string;
   /** 是否更新列表 */
-  updateList: boolean;
+  updateList: boolean | number;
 };
