@@ -40,6 +40,7 @@ const TextColumn: FC = () => {
     optType = Opts.add,
     modalVisible = false,
     updateList = false,
+    curInfoId = "",
   } = state;
   const curInfo = useRef<any>({});
   /** form */
@@ -141,11 +142,12 @@ const TextColumn: FC = () => {
           setTCState({
             modalVisible: true,
             optType: type,
+            curInfoId: id,
           })
         );
       });
     },
-    [modalVisible, optType]
+    [modalVisible, optType, curInfoId]
   );
 
   /** 取消、关闭弹窗 */
@@ -172,7 +174,7 @@ const TextColumn: FC = () => {
     } else {
       await updateRequest({
         ...values,
-        id: curInfo.current.curInfoId,
+        id: curInfoId,
       });
     }
     setTimeout(() => {
@@ -182,7 +184,7 @@ const TextColumn: FC = () => {
       });
       message.success(`栏目${OptsCN[optType]}成功`);
     }, 500);
-  }, [optType, updateList]);
+  }, [optType, updateList, curInfoId]);
 
   /** 新增信息 */
   const addModal = useCallback(async (val?: TCItemVO) => {
