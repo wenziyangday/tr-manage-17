@@ -179,7 +179,7 @@ const TextColumn: FC = () => {
     setTimeout(() => {
       setTCState({
         modalVisible: false,
-        updateList: Opts.edit,
+        updateList: `${Math.random()}`,
       });
       message.success(`栏目${OptsCN[optType]}成功`);
     }, 500);
@@ -285,7 +285,7 @@ const TextColumn: FC = () => {
 
   useEffect(() => {
     handleTextColRequest().then();
-  }, [updateList, curPage, pageSize]);
+  }, [updateList, optType, curPage, pageSize]);
 
   return (
     <Card title="文本栏目" className="text-column">

@@ -32,6 +32,6 @@ export type ITextColumnState = {
   modalVisible: boolean;
   /** 当前操作的信息的id */
   curInfoId: string;
-  /** 是否更新列表 */
+  /** 更新列表标志 */
   updateList: string;
 } & PaginationVO;
