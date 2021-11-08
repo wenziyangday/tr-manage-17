@@ -3,7 +3,7 @@
  * */
 import DataStorageUtil from "@utils/storage";
 
-export const { REACT_APP_API } = process.env;
+export const { REACT_APP_API, REACT_APP_INIT_TOKEN } = process.env;
 
 /**
  * @description 白名单
@@ -65,7 +65,7 @@ export enum OptsCN {
  * */
 export const uploadProps = (function uploadProps() {
   const data = new DataStorageUtil();
-  const token = data.getValue(TOKEN);
+  const token = REACT_APP_INIT_TOKEN || data.getValue(TOKEN);
   const UPLOAD_URL = `${REACT_APP_API}/api/upload/`;
   return {
     name: "file",

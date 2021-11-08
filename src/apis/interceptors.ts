@@ -1,4 +1,9 @@
-import { REACT_APP_API, TOKEN, WHITELIST } from "@common/common";
+import {
+  REACT_APP_API,
+  REACT_APP_INIT_TOKEN,
+  TOKEN,
+  WHITELIST,
+} from "@common/common";
 import DataStorageUtil from "@utils/storage";
 import { message } from "antd";
 import axios, { Axios, AxiosResponse } from "axios";
@@ -41,8 +46,7 @@ export default class Interceptor implements InterceptorVO {
       (config) => {
         const { url, headers } = config;
         const storage: DataStorageUtil = new DataStorageUtil();
-        const token = storage.getValue(TOKEN);
-
+        const token = REACT_APP_INIT_TOKEN || storage.getValue(TOKEN);
         if (!token) {
           goLogin();
         }
@@ -53,11 +57,9 @@ export default class Interceptor implements InterceptorVO {
           // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token
           // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
           // token 失效 也要跳走
-          headers.authorization =
-            token ||
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjEyZGVjNjllNTA4NmM5NjYxN2M1ZGQxIiwiaWF0IjoxNjM1ODYwMDE1LCJleHAiOjE2MzY0NjQ4MTV9.KnE6_1f_CSrX7_UGYC7u8RiedmU-jDXhV9SAA1Oo8hw";
+          headers.authorization = token;
         } else {
-          // goLogin();
+          goLogin();
         }
 
         return config;
