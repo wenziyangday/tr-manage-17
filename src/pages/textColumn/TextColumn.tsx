@@ -25,7 +25,7 @@ import {
   Modal,
   Upload,
 } from "antd";
-import React, { FC, useCallback, useEffect, useRef } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 
 /**
  * @description 文本栏目
@@ -42,7 +42,6 @@ const TextColumn: FC = () => {
     updateList = false,
     curInfoId = "",
   } = state;
-  const curInfo = useRef<any>({});
   /** form */
   const [modalForm] = Form.useForm();
 
@@ -136,7 +135,6 @@ const TextColumn: FC = () => {
   /** 扔出一个delay 防止出现表单dom无法获取 */
   const modalOpenDelay = useCallback(
     ({ type, id }: Partial<{ type: OptsVO; id: string }>) => {
-      curInfo.current.curInfoId = id;
       return new Promise((resolve) => {
         resolve(
           setTCState({
@@ -189,11 +187,13 @@ const TextColumn: FC = () => {
   /** 新增信息 */
   const addModal = useCallback(async (val?: TCItemVO) => {
     await modalOpenDelay({ type: Opts.add });
-    const res = await textColSortNoRequest({ pId: curInfo.current.curInfoId });
+    const res = await textColSortNoRequest({ pId: curInfoId });
 
     if (val) {
       const { _id } = val;
-      curInfo.current.curInfoId = _id;
+      setTCState({
+        curInfoId: _id,
+      });
     }
 
     modalForm.resetFields();
