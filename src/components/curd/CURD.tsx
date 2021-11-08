@@ -76,17 +76,23 @@ const CURD: FC<Partial<ICurdVO>> = (props) => {
     computeOpts = computeOpts.filter((x) => x.key !== "add");
   }
   /** icon点击事件 */
-  const iconOnClick = useCallback((e) => {
-    e.stopPropagation();
-    const { key } = e.currentTarget.dataset;
-    keyCurd(key);
-  }, []);
+  const iconOnClick = useCallback(
+    (e) => {
+      e.stopPropagation();
+      const { key } = e.currentTarget.dataset;
+      keyCurd(key);
+    },
+    [props]
+  );
 
   /** menu点击事件 */
-  const onClick = useCallback(({ key, domEvent }) => {
-    domEvent.stopPropagation();
-    keyCurd(key);
-  }, []);
+  const onClick = useCallback(
+    ({ key, domEvent }) => {
+      domEvent.stopPropagation();
+      keyCurd(key);
+    },
+    [props]
+  );
 
   /** 增、删、改、启、禁用 */
   const keyCurd = (key: string) => {
