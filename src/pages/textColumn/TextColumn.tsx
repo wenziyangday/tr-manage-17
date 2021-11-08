@@ -25,7 +25,7 @@ import {
   Modal,
   Upload,
 } from "antd";
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC, useCallback, useEffect, useRef } from "react";
 
 /**
  * @description 文本栏目
@@ -39,9 +39,9 @@ const TextColumn: FC = () => {
     curPage = 1,
     optType = Opts.add,
     modalVisible = false,
-    curInfoId,
     updateList = false,
   } = state;
+  const curInfo = useRef<any>({});
   /** form */
   const [modalForm] = Form.useForm();
 
@@ -135,17 +135,17 @@ const TextColumn: FC = () => {
   /** 扔出一个delay 防止出现表单dom无法获取 */
   const modalOpenDelay = useCallback(
     ({ type, id }: Partial<{ type: OptsVO; id: string }>) => {
+      curInfo.current.curInfoId = id;
       return new Promise((resolve) => {
         resolve(
           setTCState({
             modalVisible: true,
             optType: type,
-            curInfoId: id,
           })
         );
       });
     },
-    [modalVisible, optType, tcList]
+    [modalVisible, optType]
   );
 
   /** 取消、关闭弹窗 */
@@ -158,7 +158,6 @@ const TextColumn: FC = () => {
   /** 点击弹窗确定 */
   const modalConfirm = useCallback(async () => {
     const values = await modalForm.validateFields();
-
     // 处理url上传和已经存在的不一致的问题
     values.urls = values.urls.map((x: AnyObjVO) => {
       return {
@@ -173,7 +172,7 @@ const TextColumn: FC = () => {
     } else {
       await updateRequest({
         ...values,
-        id: curInfoId,
+        id: curInfo.current.curInfoId,
       });
     }
     setTimeout(() => {
@@ -188,11 +187,11 @@ const TextColumn: FC = () => {
   /** 新增信息 */
   const addModal = useCallback(async (val?: TCItemVO) => {
     await modalOpenDelay({ type: Opts.add });
-    const res = await textColSortNoRequest({ pId: curInfoId });
+    const res = await textColSortNoRequest({ pId: curInfo.current.curInfoId });
 
     if (val) {
       const { _id } = val;
-      setTCState({ curInfoId: _id });
+      curInfo.current.curInfoId = _id;
     }
 
     modalForm.resetFields();
@@ -206,6 +205,7 @@ const TextColumn: FC = () => {
       type: Opts.edit,
       id: _id,
     });
+
     modalForm.setFieldsValue(val);
   }, []);
 
