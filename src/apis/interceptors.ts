@@ -101,6 +101,8 @@ function errHandle(code: number, msg: string): boolean {
       message.warn("连接错误").then();
   }
 
+  throw new Error("捕获错误并阻止代码继续执行下去");
+
   return false;
 }
 
