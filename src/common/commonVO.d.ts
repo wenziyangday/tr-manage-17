@@ -27,3 +27,11 @@ export type PaginationVO = {
   /** 当前页码 */
   curPage: number;
 };
+
+/**
+ * @description 图片数据库中的结构
+ * */
+export type IPicVO = {
+  uid: string;
+  url: string;
+};

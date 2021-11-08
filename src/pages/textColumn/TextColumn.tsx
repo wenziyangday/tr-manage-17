@@ -2,7 +2,7 @@ import "@pages/textColumn/style/text-column.less";
 
 import apis from "@apis/apis";
 import { Opts, OptsCN, uploadProps } from "@common/common";
-import { OptsVO } from "@common/commonVO";
+import { AnyObjVO, OptsVO } from "@common/commonVO";
 import CURD from "@components/curd/CURD";
 import IconFont from "@components/iconFont/IconFont";
 import RenderCollapsePanel from "@pages/textColumn/components/RenderCollapsePanel";
@@ -62,49 +62,53 @@ const TextColumn: FC = () => {
   });
 
   /** list render */
-  const renderItem: RenderItem = (item: TCItemVO) => {
-    return (
-      <List.Item className="tc-l-item">
-        <Collapse className="tc-l-i-item">
-          <Collapse.Panel
-            className="tc-l-i-panel"
-            key={item._id}
-            header={<span className="tc-l-i-header">{item.columnName}</span>}
-            extra={
-              <CURD
-                showAdd={false}
-                restartOrDisable={
-                  item.state === 2 ? Opts.disable : Opts.restart
-                }
-                edit={async () => {
-                  await editModal(item);
-                }}
-                disable={() => {
-                  disableConfirm(item);
-                }}
-                restart={() => {
-                  restartConfirm(item);
-                }}
-                delete={() => {
-                  deleteConfirm(item);
-                }}
+  const renderItem: RenderItem = useCallback(
+    (item: TCItemVO) => {
+      return (
+        <List.Item className="tc-l-item">
+          <Collapse className="tc-l-i-item">
+            <Collapse.Panel
+              className="tc-l-i-panel"
+              key={item._id}
+              header={<span className="tc-l-i-header">{item.columnName}</span>}
+              extra={
+                <CURD
+                  showAdd={false}
+                  restartOrDisable={
+                    item.state === 2 ? Opts.disable : Opts.restart
+                  }
+                  edit={async () => {
+                    await editModal(item);
+                  }}
+                  disable={() => {
+                    disableConfirm(item);
+                  }}
+                  restart={() => {
+                    restartConfirm(item);
+                  }}
+                  delete={() => {
+                    deleteConfirm(item);
+                  }}
+                />
+              }
+            >
+              <RenderCollapsePanel
+                columnName={item.columnName}
+                enName={item.enName}
+                sortNum={item.sortNum}
+                state={item.state}
+                shortDesc={item.shortDesc}
+                urls={item.urls}
+                createTime={formatTime(item.createTime)}
+                modifiedTime={formatTime(item.modifiedTime)}
               />
-            }
-          >
-            <RenderCollapsePanel
-              columnName={item.columnName}
-              enName={item.enName}
-              sortNum={item.sortNum}
-              state={item.state}
-              shortDesc={item.shortDesc}
-              createTime={formatTime(item.createTime)}
-              modifiedTime={formatTime(item.modifiedTime)}
-            />
-          </Collapse.Panel>
-        </Collapse>
-      </List.Item>
-    );
-  };
+            </Collapse.Panel>
+          </Collapse>
+        </List.Item>
+      );
+    },
+    [tcList]
+  );
 
   /** 栏目列表网络请求 */
   const { loading, run: textColRequest } = useRequest(apis.getTextCol, {
@@ -144,7 +148,7 @@ const TextColumn: FC = () => {
         );
       });
     },
-    [modalVisible, optType]
+    [modalVisible, optType, tcList]
   );
 
   /** 取消、关闭弹窗 */
@@ -157,16 +161,22 @@ const TextColumn: FC = () => {
   /** 点击弹窗确定 */
   const modalConfirm = useCallback(async () => {
     const values = await modalForm.validateFields();
+
+    // 处理url上传和已经存在的不一致的问题
+    values.urls = values.urls.map((x: AnyObjVO) => {
+      return {
+        uid: x.uid,
+        url: x.url || x.response.url,
+      };
+    });
     if (optType === Opts.add) {
       await createRequest({
         ...values,
-        urls: [{}],
       });
     } else {
       await updateRequest({
         ...values,
         id: curInfoId,
-        urls: [{}],
       });
     }
     setTimeout(() => {
@@ -176,7 +186,7 @@ const TextColumn: FC = () => {
       });
       message.success(`栏目${OptsCN[optType]}成功`);
     }, 500);
-  }, [updateList]);
+  }, [optType, updateList]);
 
   /** 新增信息 */
   const addModal = useCallback(async (val?: TCItemVO) => {

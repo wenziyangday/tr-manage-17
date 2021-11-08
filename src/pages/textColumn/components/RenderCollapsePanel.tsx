@@ -1,5 +1,6 @@
 import "@pages/textColumn/style/render-collapse-panel.less";
 
+import RenderPics from "@pages/textColumn/components/RenderPics";
 import { TCItemVO } from "@pages/textColumn/types/textColumn";
 import { stateFormat } from "@utils/componentUtils";
 import { Col, Row } from "antd";
@@ -55,16 +56,24 @@ const RenderCollapsePanel: FC<IRenderCollapsePanelVO> = (props) => {
   const RenderContent = useCallback(() => {
     return contentVO.map((x) => {
       const { key = "", label } = x;
+      let value = values[key];
+
+      if (key === "state") {
+        value = stateFormat(values[key]);
+      }
+
+      if (key === "urls") {
+        value = <RenderPics pics={values[key]} />;
+      }
+
       return (
         <div className="rcp-content" key={key}>
           <span className="rcp-c-label">{label}：</span>
-          <span className="rcp-c-value">
-            {key === "state" ? stateFormat(values[key]) : values[key]}
-          </span>
+          <span className="rcp-c-value">{value}</span>
         </div>
       );
     });
-  }, [])();
+  }, [props])();
   return (
     <div className="render-collapse-panel">
       <Row gutter={24}>
