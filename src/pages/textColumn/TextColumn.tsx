@@ -62,53 +62,50 @@ const TextColumn: FC = () => {
   });
 
   /** list render */
-  const renderItem: RenderItem = useCallback(
-    (item: TCItemVO) => {
-      return (
-        <List.Item className="tc-l-item">
-          <Collapse className="tc-l-i-item">
-            <Collapse.Panel
-              className="tc-l-i-panel"
-              key={item._id}
-              header={<span className="tc-l-i-header">{item.columnName}</span>}
-              extra={
-                <CURD
-                  showAdd={false}
-                  restartOrDisable={
-                    item.state === 2 ? Opts.disable : Opts.restart
-                  }
-                  edit={async () => {
-                    await editModal(item);
-                  }}
-                  disable={() => {
-                    disableConfirm(item);
-                  }}
-                  restart={() => {
-                    restartConfirm(item);
-                  }}
-                  delete={() => {
-                    deleteConfirm(item);
-                  }}
-                />
-              }
-            >
-              <RenderCollapsePanel
-                columnName={item.columnName}
-                enName={item.enName}
-                sortNum={item.sortNum}
-                state={item.state}
-                shortDesc={item.shortDesc}
-                urls={item.urls}
-                createTime={formatTime(item.createTime)}
-                modifiedTime={formatTime(item.modifiedTime)}
+  const renderItem: RenderItem = useCallback((item: TCItemVO) => {
+    return (
+      <List.Item className="tc-l-item">
+        <Collapse className="tc-l-i-item">
+          <Collapse.Panel
+            className="tc-l-i-panel"
+            key={item._id}
+            header={<span className="tc-l-i-header">{item.columnName}</span>}
+            extra={
+              <CURD
+                showAdd={false}
+                restartOrDisable={
+                  item.state === 2 ? Opts.disable : Opts.restart
+                }
+                edit={async () => {
+                  await editModal(item);
+                }}
+                disable={() => {
+                  disableConfirm(item);
+                }}
+                restart={() => {
+                  restartConfirm(item);
+                }}
+                delete={() => {
+                  deleteConfirm(item);
+                }}
               />
-            </Collapse.Panel>
-          </Collapse>
-        </List.Item>
-      );
-    },
-    [tcList]
-  );
+            }
+          >
+            <RenderCollapsePanel
+              columnName={item.columnName}
+              enName={item.enName}
+              sortNum={item.sortNum}
+              state={item.state}
+              shortDesc={item.shortDesc}
+              urls={item.urls}
+              createTime={formatTime(item.createTime)}
+              modifiedTime={formatTime(item.modifiedTime)}
+            />
+          </Collapse.Panel>
+        </Collapse>
+      </List.Item>
+    );
+  }, []);
 
   /** 栏目列表网络请求 */
   const { loading, run: textColRequest } = useRequest(apis.getTextCol, {
