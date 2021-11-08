@@ -21,7 +21,7 @@ export default class Request implements RequestVO {
   getD<T>(url: string, params: T): Promise<T> {
     return new Promise<any>((resolve, reject) => {
       this.request
-        ?.get(url, params)
+        ?.get(url, { params })
         .then((response) => resolve(response))
         .catch((error) => reject(error));
     });
