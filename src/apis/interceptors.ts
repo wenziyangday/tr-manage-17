@@ -1,4 +1,4 @@
-import { REACT_APP_API, TOKEN, WHITELIST } from "@common/constant";
+import { REACT_APP_API, TOKEN, WHITELIST } from "@common/common";
 import DataStorageUtil from "@utils/storage";
 import { message } from "antd";
 import axios, { Axios, AxiosResponse } from "axios";

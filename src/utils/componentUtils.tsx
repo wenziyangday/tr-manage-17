@@ -1,7 +1,7 @@
 import "@utils/style/component-utils.less";
 
+import { Opts, OptsCN } from "@common/common";
 import { OptsVO } from "@common/commonVO";
-import { Opts, OptsCN } from "@common/constant";
 import IconFont from "@components/iconFont/IconFont";
 import { Modal } from "antd";
 import React from "react";

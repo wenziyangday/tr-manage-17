@@ -1,16 +1,18 @@
 /**
  * 网络服务API地址
  * */
+import DataStorageUtil from "@utils/storage";
+
 export const { REACT_APP_API } = process.env;
 
-/*
- * 白名单
+/**
+ * @description 白名单
  * */
 type WhiteList = string[];
 export const WHITELIST: WhiteList = ["/user/login"];
 
-/*
- * @description header token
+/**
+ * @description header token key
  * */
 export const TOKEN = "authorization";
 
@@ -57,3 +59,20 @@ export enum OptsCN {
   disable = "禁用",
   delete = "删除",
 }
+
+/**
+ * @description 上传文件组件的公共配置
+ * */
+export const uploadProps = (function uploadProps() {
+  const data = new DataStorageUtil();
+  const token = data.getValue(TOKEN);
+  const UPLOAD_URL = `${REACT_APP_API}/api/upload/`;
+  return {
+    name: "file",
+    action: UPLOAD_URL,
+    showUploadList: true,
+    headers: {
+      authorization: token,
+    },
+  };
+})();

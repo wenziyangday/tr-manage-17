@@ -1,4 +1,4 @@
-import { CommonObjVO, OptsVO } from "@common/commonVO";
+import { CommonObjVO, OptsVO, PaginationVO } from "@common/commonVO";
 import React from "react";
 
 /**
@@ -33,5 +33,5 @@ export type ITextColumnState = {
   /** 当前操作的信息的id */
   curInfoId: string;
   /** 是否更新列表 */
-  updateList: boolean | number;
-};
+  updateList: string;
+} & PaginationVO;

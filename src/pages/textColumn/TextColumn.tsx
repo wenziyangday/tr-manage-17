@@ -1,8 +1,8 @@
 import "@pages/textColumn/style/text-column.less";
 
 import apis from "@apis/apis";
+import { Opts, OptsCN, uploadProps } from "@common/common";
 import { OptsVO } from "@common/commonVO";
-import { Opts, OptsCN } from "@common/constant";
 import CURD from "@components/curd/CURD";
 import IconFont from "@components/iconFont/IconFont";
 import RenderCollapsePanel from "@pages/textColumn/components/RenderCollapsePanel";
@@ -34,6 +34,9 @@ const TextColumn: FC = () => {
   const [state, setTCState] = useSetState<Partial<ITextColumnState>>({});
   const {
     tcList = [],
+    total = 0,
+    pageSize = 10,
+    curPage = 1,
     optType = Opts.add,
     modalVisible = false,
     curInfoId,
@@ -110,11 +113,15 @@ const TextColumn: FC = () => {
 
   /** 网络请求更新到状态里面 */
   const handleTextColRequest = useCallback(async () => {
-    const { data: _tcList } = await textColRequest();
+    const { data: _tcList, count: _total } = await textColRequest({
+      pageNum: curPage,
+      limit: pageSize,
+    });
     setTCState({
       tcList: _tcList || [],
+      total: _total || 0,
     });
-  }, []);
+  }, [curPage, pageSize]);
 
   /** Modal中upload处理 */
   const normFile = (e: any) => {
@@ -165,11 +172,11 @@ const TextColumn: FC = () => {
     setTimeout(() => {
       setTCState({
         modalVisible: false,
-        updateList: !updateList,
+        updateList: Opts.edit,
       });
       message.success(`栏目${OptsCN[optType]}成功`);
     }, 500);
-  }, []);
+  }, [updateList]);
 
   /** 新增信息 */
   const addModal = useCallback(async (val?: TCItemVO) => {
@@ -200,7 +207,7 @@ const TextColumn: FC = () => {
     (val: TCItemVO) => {
       showConfirmModal(Opts.disable, async () => {
         await disableRequest({ id: val._id });
-        setTCState({ updateList: 0 });
+        setTCState({ updateList: Opts.disable });
       });
     },
     [updateList]
@@ -211,7 +218,7 @@ const TextColumn: FC = () => {
     (val: TCItemVO) => {
       showConfirmModal(Opts.restart, async () => {
         await restartRequest({ id: val._id });
-        setTCState({ updateList: 1 });
+        setTCState({ updateList: Opts.restart });
       });
     },
     [updateList]
@@ -222,10 +229,21 @@ const TextColumn: FC = () => {
     (val: TCItemVO) => {
       showConfirmModal(Opts.delete, async () => {
         await deleteRequest({ id: val._id });
-        setTCState({ updateList: 2 });
+        setTCState({ updateList: Opts.delete });
       });
     },
     [updateList]
+  );
+
+  /** 分页操作 */
+  const paginationChange = useCallback(
+    (page, _pageSize) => {
+      setTCState({
+        curPage: page,
+        pageSize: _pageSize,
+      });
+    },
+    [curPage, pageSize]
   );
 
   /** 栏目序号网络请求 */
@@ -260,7 +278,7 @@ const TextColumn: FC = () => {
 
   useEffect(() => {
     handleTextColRequest().then();
-  }, [updateList]);
+  }, [updateList, curPage, pageSize]);
 
   return (
     <Card title="文本栏目" className="text-column">
@@ -270,6 +288,13 @@ const TextColumn: FC = () => {
         className="tc-list"
         dataSource={tcList}
         renderItem={renderItem}
+        pagination={{
+          pageSize,
+          current: curPage,
+          showSizeChanger: true,
+          total,
+          onChange: paginationChange,
+        }}
       />
       <Modal
         className="tc-modal"
@@ -299,7 +324,13 @@ const TextColumn: FC = () => {
             valuePropName="fileList"
             getValueFromEvent={normFile}
           >
-            <Upload listType="picture-card">
+            <Upload
+              listType="picture-card"
+              name={uploadProps.name}
+              action={uploadProps.action}
+              showUploadList={uploadProps.showUploadList}
+              headers={uploadProps.headers}
+            >
               <IconFont iconClass="iconupload" styleClass="tc-upload-icon" />
             </Upload>
           </Form.Item>

@@ -1,6 +1,6 @@
 import "@components/wrapLayout/style/render-tool.less";
 
-import { TOKEN } from "@common/constant";
+import { TOKEN } from "@common/common";
 import IconFont from "@components/iconFont/IconFont";
 import DataStorageUtil from "@utils/storage";
 import { Badge, Dropdown, Menu, Modal } from "antd";

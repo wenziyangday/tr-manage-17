@@ -4,3 +4,4 @@
 4.工具：由数据生成 数据类型type
 5.局部更新问题
 6.stylelint 检查
+7.sortnumber 获取 后台服务有个bug，bug由删除数据的state：-1 产生 （重复sortNum）
