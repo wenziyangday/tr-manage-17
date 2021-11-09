@@ -78,24 +78,24 @@ const RenderMenu: FC = () => {
       selectedKeys={activeMenu}
     >
       {renderRootRoutes}
-      <Menu.SubMenu key={1} title={1}>
-        <Menu.Item key="1-1">1-1</Menu.Item>
-        <Menu.Item key="1-2">1-2</Menu.Item>
-        <Menu.Item key="1-3">1-3</Menu.Item>
-        <Menu.SubMenu key="1-4" title="1-4">
-          <Menu.Item key="1-4-1">1-4-1</Menu.Item>
-          <Menu.Item key="1-4-2">1-4-2</Menu.Item>
-          <Menu.Item key="1-4-3">1-4-3</Menu.Item>
-          <Menu.SubMenu key="1-4-4" title="1-4-4">
-            <Menu.Item key="1-4-4-1">1-4-4-1</Menu.Item>
-            <Menu.Item key="1-4-4-2">1-4-4-2</Menu.Item>
-            <Menu.Item key="1-4-4-3">1-4-4-3</Menu.Item>
-            <Menu.Item key="1-4-4-4">1-4-4-4</Menu.Item>
-          </Menu.SubMenu>
-          <Menu.Item key="1-4-5">1-4-5</Menu.Item>
-        </Menu.SubMenu>
-        <Menu.Item key="1-5">1-5</Menu.Item>
-      </Menu.SubMenu>
+      {/* <Menu.SubMenu key={1} title={1}> */}
+      {/*  <Menu.Item key="1-1">1-1</Menu.Item> */}
+      {/*  <Menu.Item key="1-2">1-2</Menu.Item> */}
+      {/*  <Menu.Item key="1-3">1-3</Menu.Item> */}
+      {/*  <Menu.SubMenu key="1-4" title="1-4"> */}
+      {/*    <Menu.Item key="1-4-1">1-4-1</Menu.Item> */}
+      {/*    <Menu.Item key="1-4-2">1-4-2</Menu.Item> */}
+      {/*    <Menu.Item key="1-4-3">1-4-3</Menu.Item> */}
+      {/*    <Menu.SubMenu key="1-4-4" title="1-4-4"> */}
+      {/*      <Menu.Item key="1-4-4-1">1-4-4-1</Menu.Item> */}
+      {/*      <Menu.Item key="1-4-4-2">1-4-4-2</Menu.Item> */}
+      {/*      <Menu.Item key="1-4-4-3">1-4-4-3</Menu.Item> */}
+      {/*      <Menu.Item key="1-4-4-4">1-4-4-4</Menu.Item> */}
+      {/*    </Menu.SubMenu> */}
+      {/*    <Menu.Item key="1-4-5">1-4-5</Menu.Item> */}
+      {/*  </Menu.SubMenu> */}
+      {/*  <Menu.Item key="1-5">1-5</Menu.Item> */}
+      {/* </Menu.SubMenu> */}
     </Menu>
   );
 };

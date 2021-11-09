@@ -158,6 +158,7 @@ const TextColumn: FC = () => {
   /** 点击弹窗确定 */
   const modalConfirm = useCallback(async () => {
     const values = await modalForm.validateFields();
+
     // 处理url上传和已经存在的不一致的问题
     values.urls = values.urls.map((x: AnyObjVO) => {
       return {

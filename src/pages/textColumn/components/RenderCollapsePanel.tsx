@@ -1,10 +1,11 @@
 import "@pages/textColumn/style/render-collapse-panel.less";
 
+import CURD from "@components/curd/CURD";
 import RenderPics from "@pages/textColumn/components/RenderPics";
 import { TCItemVO } from "@pages/textColumn/types/textColumn";
 import { stateFormat } from "@utils/componentUtils";
-import { Col, Row } from "antd";
-import React, { FC, useCallback } from "react";
+import { Col, Row, Tree, TreeDataNode } from "antd";
+import React, { FC, useCallback, useState } from "react";
 
 type IRenderCollapsePanelVO = Partial<Omit<TCItemVO, "_id" | "pId" | "count">>;
 type ContentVO = {
@@ -47,12 +48,28 @@ const contentVO: ContentVO[] = [
   },
 ];
 
+interface DataNode {
+  title: string;
+  key: string;
+  isLeaf?: boolean;
+  children?: DataNode[];
+}
+
+const initTreeData: DataNode[] = [
+  { title: "Expand to load", key: "0" },
+  { title: "Expand to load", key: "1" },
+  { title: "Tree Node", key: "2", isLeaf: true },
+];
+
 /**
  * @description 折叠窗体
  * */
 const RenderCollapsePanel: FC<IRenderCollapsePanelVO> = (props) => {
+  const [treeData, setTreeData] = useState(initTreeData);
   /** 类型推导 */
   const values = props as any;
+
+  /** 渲染每一个所需要的字段 */
   const RenderContent = useCallback(() => {
     return contentVO.map((x) => {
       const { key = "", label } = x;
@@ -74,6 +91,55 @@ const RenderCollapsePanel: FC<IRenderCollapsePanelVO> = (props) => {
       );
     });
   }, [props])();
+  const onLoadData = ({ key, children }: any) =>
+    new Promise<void>((resolve) => {
+      if (children) {
+        resolve();
+        return;
+      }
+      setTimeout(() => {
+        setTreeData((origin) =>
+          updateTreeData(origin, key, [
+            { title: "Child Node", key: `${key}-0` },
+            { title: "Child Node", key: `${key}-1` },
+          ])
+        );
+
+        resolve();
+      }, 1000);
+    });
+
+  const titleRender = (dataNode: TreeDataNode) => {
+    return (
+      <div className="rcp-title">
+        <div className="rcp-t-title">{dataNode.title}</div>
+        <CURD />
+      </div>
+    );
+  };
+
+  function updateTreeData(
+    list: DataNode[],
+    key: React.Key,
+    children: DataNode[]
+  ): DataNode[] {
+    return list.map((node) => {
+      if (node.key === key) {
+        return {
+          ...node,
+          children,
+        };
+      }
+      if (node.children) {
+        return {
+          ...node,
+          children: updateTreeData(node.children, key, children),
+        };
+      }
+      return node;
+    });
+  }
+
   return (
     <div className="render-collapse-panel">
       <Row gutter={24}>
@@ -83,6 +149,13 @@ const RenderCollapsePanel: FC<IRenderCollapsePanelVO> = (props) => {
         </Col>
         <Col span={12}>
           <h4>子级栏目:</h4>
+          <Tree
+            blockNode
+            treeData={treeData}
+            showIcon={false}
+            titleRender={titleRender}
+            loadData={onLoadData}
+          />
         </Col>
       </Row>
     </div>

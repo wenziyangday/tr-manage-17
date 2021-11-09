@@ -36,9 +36,9 @@ const DropMenu: FC = () => {
         个人中心
       </Menu.Item>
       <Menu.Item
-        key="个人收藏"
+        key="个人设置"
         onClick={() => {
-          history?.push("/about");
+          history?.push("/user/setting");
         }}
       >
         个人设置
