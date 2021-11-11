@@ -92,6 +92,7 @@ const TextColumn: FC = () => {
             }
           >
             <RenderCollapsePanel
+              _id={item._id}
               columnName={item.columnName}
               enName={item.enName}
               sortNum={item.sortNum}
@@ -100,6 +101,8 @@ const TextColumn: FC = () => {
               urls={item.urls}
               createTime={formatTime(item.createTime)}
               modifiedTime={formatTime(item.modifiedTime)}
+              edit={editModal}
+              add={addModal}
             />
           </Collapse.Panel>
         </Collapse>
@@ -158,17 +161,28 @@ const TextColumn: FC = () => {
   /** 点击弹窗确定 */
   const modalConfirm = useCallback(async () => {
     const values = await modalForm.validateFields();
-
     // 处理url上传和已经存在的不一致的问题
-    values.urls = values.urls.map((x: AnyObjVO) => {
-      return {
-        uid: x.uid,
-        url: x.url || x.response.url,
-      };
-    });
+    if (values.urls) {
+      values.urls = values.urls.map((x: AnyObjVO) => {
+        return {
+          uid: x.uid,
+          url: x.url || x.response.url,
+        };
+      });
+    } else {
+      values.urls = [];
+    }
+
     if (optType === Opts.add) {
+      let data = values;
+      if (curInfoId) {
+        data = {
+          ...values,
+          pId: curInfoId,
+        };
+      }
       await createRequest({
-        ...values,
+        ...data,
       });
     } else {
       await updateRequest({
@@ -186,20 +200,28 @@ const TextColumn: FC = () => {
   }, [optType, updateList, curInfoId]);
 
   /** 新增信息 */
-  const addModal = useCallback(async (val?: TCItemVO) => {
-    await modalOpenDelay({ type: Opts.add });
-    const res = await textColSortNoRequest({ pId: curInfoId });
+  const addModal = useCallback(
+    async (val?: TCItemVO) => {
+      await modalOpenDelay({ type: Opts.add });
+      const obj: any = {};
 
-    if (val) {
-      const { _id } = val;
-      setTCState({
-        curInfoId: _id,
-      });
-    }
-
-    modalForm.resetFields();
-    modalForm.setFieldsValue({ sortNum: res.data?.sortNum });
-  }, []);
+      if (val) {
+        const { _id } = val;
+        obj.pId = _id;
+        setTCState({
+          curInfoId: _id,
+        });
+      } else {
+        setTCState({
+          curInfoId: undefined,
+        });
+      }
+      const res = await textColSortNoRequest(obj);
+      modalForm.resetFields();
+      modalForm.setFieldsValue({ sortNum: res.data?.sortNum });
+    },
+    [curInfoId]
+  );
 
   /** 编辑信息 */
   const editModal = useCallback(async (val) => {

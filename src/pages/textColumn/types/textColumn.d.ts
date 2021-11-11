@@ -1,4 +1,4 @@
-import { CommonObjVO, OptsVO, PaginationVO } from "@common/commonVO";
+import { AnyObjVO, CommonObjVO, OptsVO, PaginationVO } from "@common/commonVO";
 import React from "react";
 
 /**
@@ -34,4 +34,6 @@ export type ITextColumnState = {
   curInfoId: string;
   /** 更新列表标志 */
   updateList: string;
+  /** 下级子树 */
+  idTree: AnyObjVO;
 } & PaginationVO;

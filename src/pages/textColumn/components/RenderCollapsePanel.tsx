@@ -1,5 +1,6 @@
 import "@pages/textColumn/style/render-collapse-panel.less";
 
+import apis from "@apis/apis";
 import CURD from "@components/curd/CURD";
 import RenderPics from "@pages/textColumn/components/RenderPics";
 import { TCItemVO } from "@pages/textColumn/types/textColumn";
@@ -7,7 +8,7 @@ import { stateFormat } from "@utils/componentUtils";
 import { Col, Row, Tree, TreeDataNode } from "antd";
 import React, { FC, useCallback, useState } from "react";
 
-type IRenderCollapsePanelVO = Partial<Omit<TCItemVO, "_id" | "pId" | "count">>;
+type IRenderCollapsePanelVO = Partial<Omit<TCItemVO, "pId" | "count">>;
 type ContentVO = {
   label: string;
   key: keyof IRenderCollapsePanelVO;
@@ -49,23 +50,32 @@ const contentVO: ContentVO[] = [
 ];
 
 interface DataNode {
+  _id: string;
+  columnName: string;
   title: string;
   key: string;
   isLeaf?: boolean;
   children?: DataNode[];
 }
 
-const initTreeData: DataNode[] = [
-  { title: "Expand to load", key: "0" },
-  { title: "Expand to load", key: "1" },
-  { title: "Tree Node", key: "2", isLeaf: true },
-];
+type IRenderCollapsePanelProps = IRenderCollapsePanelVO & {
+  edit: any;
+  add: any;
+};
 
 /**
  * @description 折叠窗体
  * */
-const RenderCollapsePanel: FC<IRenderCollapsePanelVO> = (props) => {
-  const [treeData, setTreeData] = useState(initTreeData);
+const RenderCollapsePanel: FC<IRenderCollapsePanelProps> = (props) => {
+  const { columnName, _id } = props;
+  const [treeData, setTreeData] = useState([
+    {
+      title: columnName ?? "",
+      key: _id ?? "",
+      columnName,
+      _id,
+    },
+  ]);
   /** 类型推导 */
   const values = props as any;
 
@@ -91,29 +101,52 @@ const RenderCollapsePanel: FC<IRenderCollapsePanelVO> = (props) => {
       );
     });
   }, [props])();
-  const onLoadData = ({ key, children }: any) =>
-    new Promise<void>((resolve) => {
+
+  const onLoadData = async ({ key, children }: any) => {
+    const res = await apis.getSubTextCol({ pId: key });
+    let _children: DataNode[] = [];
+
+    if (res) {
+      _children = res?.data?.map((x: any) => {
+        return {
+          ...x,
+          title: x.columnName,
+          key: x._id,
+        };
+      });
+    }
+
+    return new Promise<void>((resolve) => {
       if (children) {
         resolve();
         return;
       }
       setTimeout(() => {
-        setTreeData((origin) =>
-          updateTreeData(origin, key, [
-            { title: "Child Node", key: `${key}-0` },
-            { title: "Child Node", key: `${key}-1` },
-          ])
-        );
+        setTreeData((origin: any) => {
+          return updateTreeData(origin, key, _children);
+        });
 
         resolve();
       }, 1000);
     });
-
+  };
   const titleRender = (dataNode: TreeDataNode) => {
+    const { key } = dataNode;
     return (
       <div className="rcp-title">
         <div className="rcp-t-title">{dataNode.title}</div>
-        <CURD />
+        {_id !== key ? (
+          <CURD
+            edit={async () => {
+              await props.edit(dataNode);
+            }}
+            add={async () => {
+              await props.add(dataNode);
+            }}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     );
   };

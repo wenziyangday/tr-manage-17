@@ -18,7 +18,7 @@ export default class Request implements RequestVO {
     this.request = interceptor.getInstance();
   }
 
-  getD<T>(url: string, params: T): Promise<T> {
+  getD<T>(url: string, params: T): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.request
         ?.get(url, { params })
@@ -27,7 +27,7 @@ export default class Request implements RequestVO {
     });
   }
 
-  postD<T>(url: string, data: T): Promise<T> {
+  postD<T>(url: string, data: T): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.request
         ?.post(url, data)

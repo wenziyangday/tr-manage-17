@@ -63,6 +63,11 @@ class Apis implements ApisVO {
   deleteTextCol = (params: { id: string }) => {
     return this.http?.postD("/column/delete", params);
   };
+
+  /** 获取下级栏目信息 */
+  getSubTextCol = (params: { pId: string }) => {
+    return this.http?.getD("/column/query-sub", params);
+  };
 }
 
 export default new Apis();
