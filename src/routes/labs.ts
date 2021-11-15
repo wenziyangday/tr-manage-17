@@ -24,6 +24,16 @@ export default [
         exact: true,
         routes: [],
       },
+      {
+        path: "/communication",
+        title: "通信",
+        uniqueKey: "Communication",
+        component: React.lazy(
+          () => import("@labs/communication/Communication")
+        ),
+        exact: true,
+        routes: [],
+      },
     ],
   },
 ];
