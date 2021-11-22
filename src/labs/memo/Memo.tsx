@@ -1,6 +1,6 @@
 import SubMemo from "@labs/memo/components/SubMemo";
 import { useSetState } from "ahooks";
-import { Button, Divider } from "antd";
+import { Button, Card, Divider } from "antd";
 import React, { FC, useCallback } from "react";
 
 const Memo: FC = () => {
@@ -8,7 +8,7 @@ const Memo: FC = () => {
   let { count = 0 } = state;
   // console.log("memo");
   return (
-    <>
+    <Card title="Memo">
       memo {count}
       <div>
         <h4>验证子组件中使用memo 和不使用memo的区别</h4>
@@ -31,7 +31,7 @@ const Memo: FC = () => {
           }, [])}
         />
       </div>
-    </>
+    </Card>
   );
 };
 

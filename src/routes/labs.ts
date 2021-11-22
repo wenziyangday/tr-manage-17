@@ -34,6 +34,22 @@ export default [
         exact: true,
         routes: [],
       },
+      {
+        path: "/use-hooks",
+        title: "hooks",
+        uniqueKey: "UseHooks",
+        component: React.lazy(() => import("@labs/useHooks/UseHooks")),
+        exact: true,
+        routes: [],
+      },
     ],
+  },
+  {
+    path: "/todo",
+    title: "Todo",
+    uniqueKey: "Todo",
+    component: React.lazy(() => import("@labs/todo/Todo")),
+    exact: true,
+    routes: [],
   },
 ];

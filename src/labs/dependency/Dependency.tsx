@@ -1,6 +1,7 @@
 import "@labs/dependency/style/dependency.less";
 
 import { useSetState } from "ahooks";
+import { Card } from "antd";
 import React, { FC } from "react";
 
 const listDemo = Array(1000)
@@ -26,20 +27,22 @@ const Dependency: FC = () => {
   };
 
   return (
-    <div className="dependency" onClick={onclick}>
-      {activeOne}
-      {listDemo.map((x) => {
-        return (
-          <div
-            key={x.key}
-            data-key={x.key}
-            className={`${activeOne === x.key ? "active" : ""}`}
-          >
-            {x.key} {activeOne} {x.name}
-          </div>
-        );
-      })}
-    </div>
+    <Card title="依赖项">
+      <div className="dependency" onClick={onclick}>
+        {activeOne}
+        {listDemo.map((x) => {
+          return (
+            <div
+              key={x.key}
+              data-key={x.key}
+              className={`${activeOne === x.key ? "active" : ""}`}
+            >
+              {x.key} {activeOne} {x.name}
+            </div>
+          );
+        })}
+      </div>
+    </Card>
   );
 };
 

@@ -23,7 +23,7 @@ const Communication: FC = () => {
   };
 
   return (
-    <Card title="通信">
+    <Card title="组件级别&&页面级别 通信">
       <h4>1.通信：子组件或者说多级子组件获取父级的数据和方法 createContext</h4>
       <Provider value={getContext}>
         <div>父组件</div>
