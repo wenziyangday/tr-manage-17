@@ -1,3 +1,4 @@
+import { logInfo } from "@utils/utils";
 import { Button } from "antd";
 import React, { FC, useRef, useState } from "react";
 
@@ -10,13 +11,13 @@ const RefHook: FC = () => {
 
   const handleAlertClick = () => {
     setTimeout(() => {
-      alert(like);
+      logInfo(like);
     }, 2000);
   };
 
   return (
     <div>
-      <h1>1.useRef的使用方法：</h1>
+      <h3>1.useRef的使用方法：</h3>
       <dl>
         <dt>描述：</dt>
         <dd>
@@ -45,7 +46,7 @@ const RefHook: FC = () => {
             type="primary"
             ref={pageRef}
             onClick={() => {
-              console.log(pageRef.current, "dom对象");
+              logInfo(pageRef.current, "dom对象");
             }}
           >
             点击

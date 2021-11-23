@@ -1,5 +1,6 @@
 import "@labs/useHooks/style/use-hooks.less";
 
+import ContextHook from "@labs/useHooks/components/ContextHook";
 import RefHook from "@labs/useHooks/components/RefHook";
 import { Card, Divider } from "antd";
 import React, { FC } from "react";
@@ -20,6 +21,10 @@ const UseHooks: FC = () => {
 
       {/** useRef */}
       <RefHook />
+      <Divider />
+
+      {/** useContext */}
+      <ContextHook />
     </Card>
   );
 };

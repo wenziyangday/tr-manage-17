@@ -34,11 +34,24 @@ export const parseUrl: ParseStringVO = (uri: string) => {
   return urlObj;
 };
 
-// 将一个对象转成url的结构
+/**
+ * @param obj 对象结构
+ * @return str url结构数据
+ * @description 将一个对象转成url的结构
+ * */
 export const parseObj: ParseObjVO = (obj) => {
   let url;
   const keys: string[] = Object.keys(obj);
   url = keys.reduce((a, b) => `${a}${b}=${obj[b]}&`);
   url = `?${url}`;
   return url.slice(0, url.length - 1);
+};
+
+/**
+ * @param arg 参数
+ * @description console.log的封装
+ * */
+export const logInfo = (...arg: any[]) => {
+  // eslint-disable-next-line no-console
+  console.log.call(null, ...arg);
 };
