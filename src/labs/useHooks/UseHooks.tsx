@@ -1,7 +1,9 @@
 import "@labs/useHooks/style/use-hooks.less";
 
 import ContextHook from "@labs/useHooks/components/ContextHook";
+import MemoHook from "@labs/useHooks/components/MemoHook";
 import RefHook from "@labs/useHooks/components/RefHook";
+import StateHook from "@labs/useHooks/components/StateHook";
 import { Card, Divider } from "antd";
 import React, { FC } from "react";
 
@@ -25,6 +27,15 @@ const UseHooks: FC = () => {
 
       {/** useContext */}
       <ContextHook />
+      <Divider />
+
+      {/** useState */}
+      <StateHook />
+      <Divider />
+
+      {/** useMemo */}
+      <MemoHook />
+      <Divider />
     </Card>
   );
 };
