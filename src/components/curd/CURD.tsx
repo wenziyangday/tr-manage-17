@@ -75,6 +75,23 @@ const CURD: FC<Partial<ICurdVO>> = (props) => {
   if (!showAdd) {
     computeOpts = computeOpts.filter((x) => x.key !== "add");
   }
+
+  /** 增、删、改、启、禁用 */
+  const keyCurd = useCallback(
+    (key: string) => {
+      if (key === "add" && add) add();
+
+      if (key === "edit" && edit) edit();
+
+      if (key === "restart" && restart) restart();
+
+      if (key === "disable" && disable) disable();
+
+      if (key === "delete" && deleteItem) deleteItem();
+    },
+    [add, deleteItem, disable, edit, restart]
+  );
+
   /** icon点击事件 */
   const iconOnClick = useCallback(
     (e) => {
@@ -82,7 +99,7 @@ const CURD: FC<Partial<ICurdVO>> = (props) => {
       const { key } = e.currentTarget.dataset;
       keyCurd(key);
     },
-    [props]
+    [keyCurd]
   );
 
   /** menu点击事件 */
@@ -91,21 +108,8 @@ const CURD: FC<Partial<ICurdVO>> = (props) => {
       domEvent.stopPropagation();
       keyCurd(key);
     },
-    [props]
+    [keyCurd]
   );
-
-  /** 增、删、改、启、禁用 */
-  const keyCurd = (key: string) => {
-    if (key === "add" && add) add();
-
-    if (key === "edit" && edit) edit();
-
-    if (key === "restart" && restart) restart();
-
-    if (key === "disable" && disable) disable();
-
-    if (key === "delete" && deleteItem) deleteItem();
-  };
 
   return iconOrText === "icon" ? (
     <div className="curd">

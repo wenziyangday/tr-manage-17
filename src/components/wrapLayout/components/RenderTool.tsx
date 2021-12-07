@@ -22,7 +22,7 @@ const DropMenu: FC = () => {
           history.replace("/login");
         },
       }),
-    []
+    [confirm, history]
   );
 
   return (

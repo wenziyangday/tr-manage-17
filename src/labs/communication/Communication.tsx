@@ -115,7 +115,7 @@ const Child: FC<any> = (props) => {
 
   useEffect(() => {
     fun(state);
-  }, [state]);
+  }, [fun, state]);
   return (
     <div>
       子name：{name}

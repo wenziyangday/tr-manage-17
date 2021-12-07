@@ -13,14 +13,16 @@ const MemoHook: FC = () => {
   const memoCom = useMemo(() => {
     logInfo("re-render-2");
     return <div>memoCom</div>;
-  }, [state]);
+  }, []);
 
   return (
     <div>
       <h3>4.useMemo使用方法</h3>
       <dl>
         <dt>描述：</dt>
-        <dd>A.返回一个memoized的值</dd>
+        <dd>
+          A.返回一个memoized的 <em>值</em>
+        </dd>
         <dd>
           B.把创建的函数或者依赖的数组作为参数传入 useMemo,它仅会在
           <em>某个依赖项改变</em>时才会重新计算一个memoized的值

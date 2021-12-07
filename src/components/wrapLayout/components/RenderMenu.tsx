@@ -50,9 +50,12 @@ const RenderMenu: FC = () => {
   }, [])();
 
   // menu路由切换事件
-  const menuClick = useCallback((e) => {
-    history.push(e.key);
-  }, []);
+  const menuClick = useCallback(
+    (e) => {
+      history.push(e.key);
+    },
+    [history]
+  );
 
   // 选中highlight
   const activeMenu = useCallback(() => {
@@ -66,7 +69,7 @@ const RenderMenu: FC = () => {
       backArr.push(back);
     });
     return backArr;
-  }, [])();
+  }, [history])();
 
   return (
     <Menu

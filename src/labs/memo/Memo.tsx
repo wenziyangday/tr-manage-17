@@ -7,6 +7,14 @@ const Memo: FC = () => {
   const [state, setState] = useSetState<any>({});
   let { count = 0 } = state;
   // console.log("memo");
+
+  const diff = useCallback(() => {
+    let _count = count;
+    _count += 1;
+    setState({
+      count: _count,
+    });
+  }, [count, setState]);
   return (
     <Card title="Memo">
       memo {count}
@@ -23,13 +31,7 @@ const Memo: FC = () => {
         </Button>
         <Divider />
         <h4>不使用/使用useCallback 比较差异</h4>
-        <SubMemo
-          handleClick={useCallback(() => {
-            setState({
-              count: (count += 1),
-            });
-          }, [])}
-        />
+        <SubMemo handleClick={diff} />
       </div>
     </Card>
   );

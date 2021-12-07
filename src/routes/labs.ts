@@ -42,6 +42,14 @@ export default [
         exact: true,
         routes: [],
       },
+      {
+        path: "/delay-state",
+        title: "延迟状态",
+        uniqueKey: "UseHooks",
+        component: React.lazy(() => import("@labs/delayState/DelayState")),
+        exact: true,
+        routes: [],
+      },
     ],
   },
   {

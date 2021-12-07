@@ -39,11 +39,40 @@ const TextColumn: FC = () => {
     curPage = 1,
     optType = Opts.add,
     modalVisible = false,
-    updateList = false,
     curInfoId = "",
   } = state;
   /** form */
   const [modalForm] = Form.useForm();
+
+  /** 栏目序号网络请求 */
+  const { run: textColSortNoRequest } = useRequest(apis.getTextColSortNo, {
+    manual: true,
+  });
+
+  /** 新增栏目网络请求 */
+  const { run: createRequest } = useRequest(apis.createTextCol, {
+    manual: true,
+  });
+
+  /** 修改栏目网络请求 */
+  const { run: updateRequest } = useRequest(apis.updateTextCol, {
+    manual: true,
+  });
+
+  /** 禁用栏目网络请求 */
+  const { run: disableRequest } = useRequest(apis.disableTextCol, {
+    manual: true,
+  });
+
+  /** 启用栏目网络请求 */
+  const { run: restartRequest } = useRequest(apis.restartTextCol, {
+    manual: true,
+  });
+
+  /** 删除栏目网络请求 */
+  const { run: deleteRequest } = useRequest(apis.deleteTextCol, {
+    manual: true,
+  });
 
   /** 新增栏目组件 */
   const AddMain: FC = React.memo(() => {
@@ -61,55 +90,6 @@ const TextColumn: FC = () => {
     );
   });
 
-  /** list render */
-  const renderItem: RenderItem = useCallback((item: TCItemVO) => {
-    return (
-      <List.Item className="tc-l-item">
-        <Collapse className="tc-l-i-item">
-          <Collapse.Panel
-            className="tc-l-i-panel"
-            key={item._id}
-            header={<span className="tc-l-i-header">{item.columnName}</span>}
-            extra={
-              <CURD
-                showAdd={false}
-                restartOrDisable={
-                  item.state === 2 ? Opts.disable : Opts.restart
-                }
-                edit={async () => {
-                  await editModal(item);
-                }}
-                disable={() => {
-                  disableConfirm(item);
-                }}
-                restart={() => {
-                  restartConfirm(item);
-                }}
-                delete={() => {
-                  deleteConfirm(item);
-                }}
-              />
-            }
-          >
-            <RenderCollapsePanel
-              _id={item._id}
-              columnName={item.columnName}
-              enName={item.enName}
-              sortNum={item.sortNum}
-              state={item.state}
-              shortDesc={item.shortDesc}
-              urls={item.urls}
-              createTime={formatTime(item.createTime)}
-              modifiedTime={formatTime(item.modifiedTime)}
-              edit={editModal}
-              add={addModal}
-            />
-          </Collapse.Panel>
-        </Collapse>
-      </List.Item>
-    );
-  }, []);
-
   /** 栏目列表网络请求 */
   const { loading, run: textColRequest } = useRequest(apis.getTextCol, {
     manual: true,
@@ -125,7 +105,7 @@ const TextColumn: FC = () => {
       tcList: _tcList || [],
       total: _total || 0,
     });
-  }, [curPage, pageSize]);
+  }, [curPage, pageSize, setTCState, textColRequest]);
 
   /** Modal中upload处理 */
   const normFile = (e: any) => {
@@ -148,7 +128,7 @@ const TextColumn: FC = () => {
         );
       });
     },
-    [modalVisible, optType, curInfoId]
+    [setTCState]
   );
 
   /** 取消、关闭弹窗 */
@@ -156,7 +136,7 @@ const TextColumn: FC = () => {
     setTCState({
       modalVisible: false,
     });
-  }, [modalVisible]);
+  }, [setTCState]);
 
   /** 点击弹窗确定 */
   const modalConfirm = useCallback(async () => {
@@ -193,11 +173,19 @@ const TextColumn: FC = () => {
     setTimeout(() => {
       setTCState({
         modalVisible: false,
-        updateList: `${Math.random()}`,
       });
       message.success(`栏目${OptsCN[optType]}成功`);
+      handleTextColRequest();
     }, 500);
-  }, [optType, updateList, curInfoId]);
+  }, [
+    modalForm,
+    optType,
+    curInfoId,
+    createRequest,
+    updateRequest,
+    setTCState,
+    handleTextColRequest,
+  ]);
 
   /** 新增信息 */
   const addModal = useCallback(
@@ -220,29 +208,32 @@ const TextColumn: FC = () => {
       modalForm.resetFields();
       modalForm.setFieldsValue({ sortNum: res.data?.sortNum });
     },
-    [curInfoId]
+    [modalForm, modalOpenDelay, setTCState, textColSortNoRequest]
   );
 
   /** 编辑信息 */
-  const editModal = useCallback(async (val) => {
-    const { _id } = val;
-    await modalOpenDelay({
-      type: Opts.edit,
-      id: _id,
-    });
+  const editModal = useCallback(
+    async (val) => {
+      const { _id } = val;
+      await modalOpenDelay({
+        type: Opts.edit,
+        id: _id,
+      });
 
-    modalForm.setFieldsValue(val);
-  }, []);
+      modalForm.setFieldsValue(val);
+    },
+    [modalForm, modalOpenDelay]
+  );
 
   /** 禁用信息 */
   const disableConfirm = useCallback(
     (val: TCItemVO) => {
       showConfirmModal(Opts.disable, async () => {
         await disableRequest({ id: val._id });
-        setTCState({ updateList: Opts.disable });
+        await handleTextColRequest();
       });
     },
-    [updateList]
+    [disableRequest, handleTextColRequest]
   );
 
   /** 启用信息 */
@@ -250,10 +241,10 @@ const TextColumn: FC = () => {
     (val: TCItemVO) => {
       showConfirmModal(Opts.restart, async () => {
         await restartRequest({ id: val._id });
-        setTCState({ updateList: Opts.restart });
+        await handleTextColRequest();
       });
     },
-    [updateList]
+    [restartRequest, handleTextColRequest]
   );
 
   /** 删除信息 */
@@ -261,10 +252,10 @@ const TextColumn: FC = () => {
     (val: TCItemVO) => {
       showConfirmModal(Opts.delete, async () => {
         await deleteRequest({ id: val._id });
-        setTCState({ updateList: Opts.delete });
+        await handleTextColRequest();
       });
     },
-    [updateList]
+    [deleteRequest, handleTextColRequest]
   );
 
   /** 分页操作 */
@@ -275,42 +266,64 @@ const TextColumn: FC = () => {
         pageSize: _pageSize,
       });
     },
-    [curPage, pageSize]
+    [setTCState]
   );
 
-  /** 栏目序号网络请求 */
-  const { run: textColSortNoRequest } = useRequest(apis.getTextColSortNo, {
-    manual: true,
-  });
-
-  /** 新增栏目网络请求 */
-  const { run: createRequest } = useRequest(apis.createTextCol, {
-    manual: true,
-  });
-
-  /** 修改栏目网络请求 */
-  const { run: updateRequest } = useRequest(apis.updateTextCol, {
-    manual: true,
-  });
-
-  /** 禁用栏目网络请求 */
-  const { run: disableRequest } = useRequest(apis.disableTextCol, {
-    manual: true,
-  });
-
-  /** 启用栏目网络请求 */
-  const { run: restartRequest } = useRequest(apis.restartTextCol, {
-    manual: true,
-  });
-
-  /** 删除栏目网络请求 */
-  const { run: deleteRequest } = useRequest(apis.deleteTextCol, {
-    manual: true,
-  });
+  /** list render */
+  const renderItem: RenderItem = useCallback(
+    (item: TCItemVO) => {
+      return (
+        <List.Item className="tc-l-item">
+          <Collapse className="tc-l-i-item">
+            <Collapse.Panel
+              className="tc-l-i-panel"
+              key={item._id}
+              header={<span className="tc-l-i-header">{item.columnName}</span>}
+              extra={
+                <CURD
+                  showAdd={false}
+                  restartOrDisable={
+                    item.state === 2 ? Opts.disable : Opts.restart
+                  }
+                  edit={async () => {
+                    await editModal(item);
+                  }}
+                  disable={() => {
+                    disableConfirm(item);
+                  }}
+                  restart={() => {
+                    restartConfirm(item);
+                  }}
+                  delete={() => {
+                    deleteConfirm(item);
+                  }}
+                />
+              }
+            >
+              <RenderCollapsePanel
+                _id={item._id}
+                columnName={item.columnName}
+                enName={item.enName}
+                sortNum={item.sortNum}
+                state={item.state}
+                shortDesc={item.shortDesc}
+                urls={item.urls}
+                createTime={formatTime(item.createTime)}
+                modifiedTime={formatTime(item.modifiedTime)}
+                edit={editModal}
+                add={addModal}
+              />
+            </Collapse.Panel>
+          </Collapse>
+        </List.Item>
+      );
+    },
+    [addModal, deleteConfirm, disableConfirm, editModal, restartConfirm]
+  );
 
   useEffect(() => {
     handleTextColRequest().then();
-  }, [updateList, optType, curPage, pageSize]);
+  }, [handleTextColRequest]);
 
   return (
     <Card title="文本栏目" className="text-column">

@@ -1,5 +1,6 @@
 import "@labs/useHooks/style/use-hooks.less";
 
+import CallbackHook from "@labs/useHooks/components/CallbackHook";
 import ContextHook from "@labs/useHooks/components/ContextHook";
 import MemoHook from "@labs/useHooks/components/MemoHook";
 import RefHook from "@labs/useHooks/components/RefHook";
@@ -35,6 +36,10 @@ const UseHooks: FC = () => {
 
       {/** useMemo */}
       <MemoHook />
+      <Divider />
+
+      {/** useCallback */}
+      <CallbackHook />
       <Divider />
     </Card>
   );

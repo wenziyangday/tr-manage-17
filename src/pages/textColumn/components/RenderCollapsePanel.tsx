@@ -100,7 +100,7 @@ const RenderCollapsePanel: FC<IRenderCollapsePanelProps> = (props) => {
         </div>
       );
     });
-  }, [props])();
+  }, [values])();
 
   const onLoadData = async ({ key, children }: any) => {
     const res = await apis.getSubTextCol({ pId: key });

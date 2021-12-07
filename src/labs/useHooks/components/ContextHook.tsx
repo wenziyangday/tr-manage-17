@@ -2,7 +2,7 @@ import MyContext from "@labs/useHooks/components/context";
 import ContextSon from "@labs/useHooks/components/ContextSon";
 import { useSetState } from "ahooks";
 import { Button } from "antd";
-import React, { FC, useEffect } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 
 /**
  * @description context： useContext和createContext的基本用法
@@ -24,16 +24,17 @@ const defaultPerson: PersonVO = {
 const ContextHook: FC = () => {
   const [state, setState] = useSetState<Partial<PersonVO>>(defaultPerson);
 
-  const updateState = () => {
+  const updateState = useCallback(() => {
     setState({
       name: `${Math.random()}`,
       age: Math.random() * 1000,
     });
-  };
+  }, [setState]);
 
   useEffect(() => {
     state.callback = updateState;
-  }, [setState]);
+  }, [state, updateState]);
+
   return (
     <div className="context-hook">
       <h3>2.useContext和createContext使用方法</h3>
