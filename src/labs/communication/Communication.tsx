@@ -1,7 +1,7 @@
 import { Consumer, Provider } from "@common/context";
 import { useSetState } from "ahooks";
 import { Button, Card, Divider } from "antd";
-import React, { FC, useEffect, useImperativeHandle, useRef } from "react";
+import React, { FC, useImperativeHandle, useRef } from "react";
 
 /**
  * @description 通信 多级子组件获取父、爷级组件的数据
@@ -112,18 +112,16 @@ const Child: FC<any> = (props) => {
   const { fun } = props;
   const [state, setCState] = useSetState<any>({});
   const { name } = state;
-
-  useEffect(() => {
-    fun(state);
-  }, [fun, state]);
   return (
     <div>
       子name：{name}
       <Button
         onClick={() => {
-          setCState({
+          const _state = {
             name: `${Math.random()}张珊珊`,
-          });
+          };
+          fun(_state);
+          setCState(_state);
         }}
       >
         点击
