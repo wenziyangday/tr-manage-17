@@ -3,7 +3,7 @@ import ContextGrandSon from "@labs/useHooks/components/ContextGrandSon";
 import { Button } from "antd";
 import React, { FC, useContext } from "react";
 
-import MyContext from "./context";
+import MyContext from "../context/context";
 
 const ContextSon: FC = () => {
   const useContextValue: AnyObjVO = useContext(MyContext);

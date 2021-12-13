@@ -2,7 +2,10 @@ import "@labs/useHooks/style/use-hooks.less";
 
 import CallbackHook from "@labs/useHooks/components/CallbackHook";
 import ContextHook from "@labs/useHooks/components/ContextHook";
+import EffectHook from "@labs/useHooks/components/EffectHook";
+import LayoutEffectHook from "@labs/useHooks/components/LayoutEffectHook";
 import MemoHook from "@labs/useHooks/components/MemoHook";
+import ReducerHook from "@labs/useHooks/components/ReducerHook";
 import RefHook from "@labs/useHooks/components/RefHook";
 import StateHook from "@labs/useHooks/components/StateHook";
 import { Card, Divider } from "antd";
@@ -40,6 +43,18 @@ const UseHooks: FC = () => {
 
       {/** useCallback */}
       <CallbackHook />
+      <Divider />
+
+      {/** useReducer */}
+      <ReducerHook />
+      <Divider />
+
+      {/** useEffect */}
+      <EffectHook />
+      <Divider />
+
+      {/** useLayoutEffect */}
+      <LayoutEffectHook />
       <Divider />
     </Card>
   );

@@ -15,16 +15,16 @@ const Todo: FC = () => {
         <List.Item.Meta title="useContext" description="用法：已完成" />
         <List.Item.Meta title="useState" description="用法：已完成" />
         <List.Item.Meta title="useMemo" description="用法：已完成" />
-        <List.Item.Meta title="useCallback" description="用法：" />
-        <List.Item.Meta title="useReducer" description="用法：" />
-        <List.Item.Meta title="useEffect" description="用法：" />
-        <List.Item.Meta title="useLayoutEffect" description="用法：" />
+        <List.Item.Meta title="useCallback" description="用法：已完成" />
+        <List.Item.Meta title="useReducer" description="用法：已完成" />
+        <List.Item.Meta title="useEffect" description="用法：已完成" />
+        <List.Item.Meta title="useLayoutEffect" description="用法：已完成" />
       </List>
       <h3>2.hooks的依赖收集规则</h3>
       <List>
-        <List.Item.Meta title="useEffect" description="用法：" />
-        <List.Item.Meta title="useMemo" description="用法：" />
-        <List.Item.Meta title="useCallback" description="用法：" />
+        <List.Item.Meta title="useEffect" description="用法：已完成" />
+        <List.Item.Meta title="useMemo" description="用法：已完成" />
+        <List.Item.Meta title="useCallback" description="用法：已完成" />
       </List>
     </Card>
   );

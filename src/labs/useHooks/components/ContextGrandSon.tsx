@@ -2,7 +2,7 @@ import { AnyObjVO } from "@common/commonVO";
 import { Button } from "antd";
 import React, { FC } from "react";
 
-import MyContext from "./context";
+import MyContext from "../context/context";
 
 const ContextGrandSon: FC = () => {
   return (
