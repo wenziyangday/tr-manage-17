@@ -8,10 +8,15 @@ import MemoHook from "@labs/useHooks/components/MemoHook";
 import ReducerHook from "@labs/useHooks/components/ReducerHook";
 import RefHook from "@labs/useHooks/components/RefHook";
 import StateHook from "@labs/useHooks/components/StateHook";
+import { logInfo } from "@utils/utils";
 import { Card, Divider } from "antd";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 const UseHooks: FC = () => {
+  useEffect(() => {
+    logInfo("UseHooks");
+  }, []);
+
   return (
     <Card title="hooks 的使用方法" className="use-hooks">
       <dl>

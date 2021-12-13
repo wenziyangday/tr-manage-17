@@ -11,7 +11,7 @@ const RefHook: FC = () => {
 
   const handleAlertClick = () => {
     setTimeout(() => {
-      logInfo(like);
+      logInfo(`refHook-${like}`);
     }, 2000);
   };
 

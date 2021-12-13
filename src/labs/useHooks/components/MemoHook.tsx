@@ -9,9 +9,9 @@ import React, { FC, useMemo, useState } from "react";
 const MemoHook: FC = () => {
   const [state, setState] = useState<any>({});
 
-  logInfo("re-render-1");
+  logInfo("MemoHook-re-render-1");
   const memoCom = useMemo(() => {
-    logInfo("re-render-2");
+    logInfo("MemoHook-re-render-2");
     return <div>memoCom</div>;
   }, []);
 

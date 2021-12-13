@@ -11,7 +11,7 @@ type PersonVO = {
 };
 
 const StateHook: FC = () => {
-  logInfo("re-render");
+  logInfo("StateHook-re-render");
   const [state, setState] = useState<Partial<PersonVO>>({
     name: "张三的歌",
     age: 1000,

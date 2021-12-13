@@ -37,7 +37,7 @@ const ReducerHook: FC = () => {
     count: 0,
     age: 100,
   });
-  logInfo("refresh-reducer");
+  logInfo("ReducerHook-refresh-reducer");
 
   const handleClick = useCallback(
     () =>

@@ -11,7 +11,7 @@ const CallbackHook: FC = () => {
   const { name, age } = state;
 
   const handleClick = useCallback(() => {
-    logInfo("handleClick");
+    logInfo("CallbackHook-handleClick");
     setState({
       name: Math.random(),
       age: parseInt(`${Math.random() * 100}`, 10),
@@ -19,7 +19,7 @@ const CallbackHook: FC = () => {
   }, []);
 
   const Age = useCallback(() => {
-    logInfo("Age");
+    logInfo("CallbackHook-Age");
     return <div>callbackAge: {age}</div>;
   }, [age]);
 

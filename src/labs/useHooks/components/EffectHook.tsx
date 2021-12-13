@@ -6,14 +6,14 @@ import React, { FC, useEffect, useState } from "react";
  * */
 const EffectHook: FC = () => {
   const [state, setState] = useState<number>(0);
-  logInfo(1);
+  logInfo("EffectHook-1");
 
   const handleSetState = () => {
     setState(Math.random);
   };
 
   useEffect(() => {
-    logInfo(2);
+    logInfo("EffectHook-2");
     handleSetState();
 
     return () => {
@@ -21,7 +21,7 @@ const EffectHook: FC = () => {
     };
   }, []);
 
-  logInfo(3);
+  logInfo("EffectHook-3");
 
   return (
     <div>
@@ -36,7 +36,7 @@ const EffectHook: FC = () => {
         <dd>
           C.默认情况下，effect将在每轮渲染结束后执行，但你可以选择让台在只有某些值改变的时候才执行
         </dd>
-        {logInfo(4)}
+        {logInfo("EffectHook-4")}
       </dl>
       <dl>
         <dt>清除effect</dt>

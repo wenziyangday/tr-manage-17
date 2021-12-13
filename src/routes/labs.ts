@@ -9,6 +9,14 @@ export default [
     exact: true,
     routes: [
       {
+        path: "/todo",
+        title: "Todo",
+        uniqueKey: "Todo",
+        component: React.lazy(() => import("@labs/todo/Todo")),
+        exact: true,
+        routes: [],
+      },
+      {
         path: "/Memo",
         title: "Memo",
         uniqueKey: "Memo",
@@ -51,13 +59,5 @@ export default [
         routes: [],
       },
     ],
-  },
-  {
-    path: "/todo",
-    title: "Todo",
-    uniqueKey: "Todo",
-    component: React.lazy(() => import("@labs/todo/Todo")),
-    exact: true,
-    routes: [],
   },
 ];
