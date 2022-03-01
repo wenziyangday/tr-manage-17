@@ -35,6 +35,15 @@ export const parseUrl: ParseStringVO = (uri: string) => {
 };
 
 /**
+ * @param uri string url字符串
+ * @eg a=100&b=op&c=uj
+ * @return 返回一个参数对象 {a: 100, b: op, c: uj}
+ * */
+export const parseUrl2 = (uri: string) => {
+  return Object.fromEntries(new URLSearchParams(uri));
+};
+
+/**
  * @param obj 对象结构
  * @return str url结构数据
  * @description 将一个对象转成url的结构
