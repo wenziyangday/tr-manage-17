@@ -9,6 +9,14 @@ export default [
     exact: true,
     routes: [
       {
+        path: "/points",
+        title: "Points",
+        uniqueKey: "Points",
+        component: React.lazy(() => import("@labs/points/Points")),
+        exact: true,
+        routes: [],
+      },
+      {
         path: "/todo",
         title: "Todo",
         uniqueKey: "Todo",

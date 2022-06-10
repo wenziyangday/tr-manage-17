@@ -1,5 +1,6 @@
 import "@pages/login/style/login.less";
 
+import { logInfo } from "@utils/utils";
 import { Button, Form, Input } from "antd";
 import React, { FC } from "react";
 
@@ -8,7 +9,7 @@ const Login: FC = () => {
     <Form
       layout="vertical"
       onFinish={(values: any) => {
-        console.log(values);
+        logInfo(values);
       }}
     >
       <div className="login">
