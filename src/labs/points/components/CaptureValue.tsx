@@ -29,7 +29,7 @@ const CaptureValue: FC = () => {
       color: "green",
       title: `${Math.random()} memoized`,
     };
-  }, [count]);
+  }, []);
 
   return (
     <div>
